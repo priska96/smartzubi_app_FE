@@ -23,7 +23,11 @@ function Register() {
     });
 
     const onSubmit = async (data) => {
-        const result = await register(data.username, data.email, data.password);
+        const result = await register({
+            username: data.username,
+            email: data.email,
+            password: data.password,
+        });
         const res = await createCheckoutSession({
             lookup_key: data.free_membership
                 ? FREE_MEMBERSHIP
