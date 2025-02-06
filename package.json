@@ -23,7 +23,7 @@
     ],
     "scripts": {
         "dev": "cross-env VITE_API_URL=http://localhost:8000 vite --open",
-        "start": "serve -s build",
+        "start": "serve -s dist",
         "host": "vite --open --host",
         "build": "cross-env VITE_API_URL=https://smartzubi-backend-9a9dc1a5e4a6.herokuapp.com vite build",
         "preview": "vite preview",
