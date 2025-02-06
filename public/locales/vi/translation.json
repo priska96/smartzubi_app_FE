@@ -1,0 +1,18 @@
+{
+    "login": {
+        "email": "thư điện tử",
+        "password": "mật khẩu"
+    },
+    "forbidden": {
+        "free-member": {
+            "sorry": "Xin lỗi",
+            "access-denied": "Bạn không phải là thành viên Pro. Truy cập bị từ chối",
+            "upgrade-btn": "Nâng cấp ngay và trở thành thành viên Pro"
+        },
+        "locked-member": {
+            "sorry": "Xin lỗi",
+            "access-denied": "Tài khoản của bạn đã bị khóa. Truy cập bị từ chối",
+            "contact-us": "Liên hệ với bộ phận hỗ trợ"
+        }
+    }
+}

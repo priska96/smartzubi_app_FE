@@ -1,0 +1,18 @@
+{
+    "login": {
+        "email": "E-Mail",
+        "password": "Passwort"
+    },
+    "forbidden": {
+        "free-member": {
+            "sorry": "Entschuldigung",
+            "access-denied": "Du bist kein Pro-Member. Zugriff verweigert",
+            "upgrade-btn": "Jetzt upgraden und Pro-Member werden"
+        },
+        "locked-member": {
+            "sorry": "Entschuldigung",
+            "access-denied": "Dein Konto wurde gesperrt. Zugriff verweigert",
+            "contact-us": "Kontaktiere den Support"
+        }
+    }
+}
