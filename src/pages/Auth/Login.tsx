@@ -96,7 +96,6 @@ function Login() {
                 type="email"
                 label={t('login.email')}
                 variant="outlined"
-                defaultValue="gfdgd@fsd.de"
                 sx={{
                     '.MuiOutlinedInput-notchedOutline': {
                         borderColor: '#a1a1aa',
@@ -113,7 +112,6 @@ function Login() {
                     type={showPassword ? 'text' : 'password'}
                     label={t('login.password')}
                     variant="outlined"
-                    defaultValue="123456"
                     sx={{
                         '& .MuiInputBase-root ': { pr: '4px' },
                         '.MuiOutlinedInput-notchedOutline': {
