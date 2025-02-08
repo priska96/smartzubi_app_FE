@@ -9,6 +9,11 @@
         "signIn": "Einloggen",
         "pick_only_one": "Wähle nur eine"
     },
+    "registration_success": {
+        "title": "Registrierung erfolgreich!",
+        "message": "Vielen Dank für Ihre Registrierung für die Pro-Mitgliedschaft. Genießen Sie Ihre Vorteile!",
+        "button": "Zurück zum Login"
+    },
     "login": {
         "email": "E-Mail",
         "password": "Passwort",
@@ -37,5 +42,15 @@
             "access-denied": "Dein Konto wurde gesperrt. Zugriff verweigert",
             "contact-us": "Kontaktiere den Support"
         }
+    },
+    "exams": {
+        "list_title": "IHK Prüfungen",
+        "pdf_title": "IHK Prüfung PDF"
+    },
+    "payment": {
+        "checkout": "Zur Kasse"
+    },
+    "profile": {
+        "title": "Profil"
     }
 }

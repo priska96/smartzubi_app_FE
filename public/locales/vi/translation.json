@@ -9,6 +9,11 @@
         "signIn": "Đăng nhập",
         "pick_only_one": "Chỉ chọn một"
     },
+    "registration_success": {
+        "title": "Đăng ký thành công!",
+        "message": "Cảm ơn bạn đã đăng ký thành viên Pro. Hãy tận hưởng những lợi ích của bạn!",
+        "button": "Quay lại Đăng nhập"
+    },
     "login": {
         "email": "Thư điện tử",
         "password": "Mật khẩu",
@@ -37,5 +42,15 @@
             "access-denied": "Tài khoản của bạn đã bị khóa. Truy cập bị từ chối",
             "contact-us": "Liên hệ với bộ phận hỗ trợ"
         }
+    },
+    "exams": {
+        "list_title": "Danh sách kỳ thi IHK",
+        "pdf_title": "PDF kỳ thi IHK"
+    },
+    "payment": {
+        "checkout": "Thanh toán"
+    },
+    "profile": {
+        "title": "Hồ sơ"
     }
 }

@@ -1,8 +1,10 @@
 import { Typography, Stack, Container } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import ExamList from '@/components/Exam/ExamList';
 import { useAuthUser } from '@/features/authentication/hooks';
 
 function ExamListPage() {
+    const { t } = useTranslation();
     const user = useAuthUser();
 
     if (!user) {
@@ -13,7 +15,7 @@ function ExamListPage() {
         <Container className="py-4">
             <Stack gap={1} my={2}>
                 <Typography textAlign="center" variant="subtitle1">
-                    IHK Pruefungsfragen
+                    {t('exams.list_title')}
                 </Typography>
             </Stack>
             <ExamList />

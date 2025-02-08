@@ -1,8 +1,10 @@
 import { Typography, Stack, Container } from '@mui/material';
 import UserProfile from '@/features/userProfile/UserProfile';
 import { useAuthUser } from '@/features/authentication/hooks';
+import { useTranslation } from 'react-i18next';
 
 function UserProfilePage() {
+    const { t } = useTranslation();
     const user = useAuthUser();
 
     if (!user) {
@@ -13,7 +15,7 @@ function UserProfilePage() {
         <Container className="py-4">
             <Stack gap={1} my={2}>
                 <Typography textAlign="center" variant="subtitle1">
-                    Profil
+                    {t('proile.title')}
                 </Typography>
             </Stack>
             <UserProfile />

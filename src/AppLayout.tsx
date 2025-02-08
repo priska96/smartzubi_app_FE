@@ -1,7 +1,8 @@
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Logo } from './components/Logo';
+import React from 'react';
 
 type LngRet = { [lng: string]: { nativeName: string } };
 
@@ -11,6 +12,11 @@ function AppLayout() {
         de: { nativeName: 'DE' },
         vi: { nativeName: 'VN' },
     };
+
+    const navigate = useNavigate();
+    React.useEffect(() => {
+        navigate('/login', { replace: true });
+    }, [navigate]);
 
     return (
         <div>
