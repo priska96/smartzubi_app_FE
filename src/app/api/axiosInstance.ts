@@ -5,18 +5,18 @@ const api = axios.create({
     baseURL: API_URL, // Your backend URL
 });
 
-const api_auth = axios.create({
+const apiAuth = axios.create({
     baseURL: API_URL, // Your backend URL
 });
 
-api_auth.interceptors.request.use(
+apiAuth.interceptors.request.use(
     (config) => {
         config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
         return config;
     },
     (error: AxiosError) => Promise.reject(error)
 );
-api_auth.interceptors.response.use(
+apiAuth.interceptors.response.use(
     (config) => {
         config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
         return config;
@@ -29,4 +29,17 @@ api_auth.interceptors.response.use(
     }
 );
 
-export { api, api_auth };
+const openAIApi = axios.create({
+    baseURL: 'https://api.openai.com/v1/chat/completions',
+});
+
+apiAuth.interceptors.request.use(
+    (config) => {
+        config.headers['Content-Type'] = 'application/json';
+        config.headers.Authorization = `Bearer ${'OPENAI_API_KEY'}`;
+        return config;
+    },
+    (error: AxiosError) => Promise.reject(error)
+);
+
+export { api, apiAuth, openAIApi };

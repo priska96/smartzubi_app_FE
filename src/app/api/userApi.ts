@@ -1,4 +1,4 @@
-import { api, api_auth } from './axiosInstance';
+import { api, apiAuth } from './axiosInstance';
 import { UserExam } from './models';
 import { CreateUserExamReqData } from './types';
 
@@ -9,7 +9,7 @@ export const createUserExam = async ({
     answered_questions_ids,
 }: CreateUserExamReqData) => {
     try {
-        const response = await api_auth.post(
+        const response = await apiAuth.post(
             `/api/user/${user_id}/exam/create`,
             {
                 user_id,
@@ -26,7 +26,7 @@ export const createUserExam = async ({
 
 export const getUserExams = async (user_id: number): Promise<UserExam[]> => {
     try {
-        const response = await api_auth.get(`/api/user/${user_id}/exam`);
+        const response = await apiAuth.get(`/api/user/${user_id}/exam`);
         return response.data;
     } catch (e) {
         throw e;
@@ -38,7 +38,7 @@ export const getUserExam = async (
     user_exam_id: number
 ): Promise<UserExam> => {
     try {
-        const response = await api_auth.get(
+        const response = await apiAuth.get(
             `/api/user/${user_id}/exam/${user_exam_id}`
         );
         return response.data;

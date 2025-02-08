@@ -30,7 +30,7 @@ export function ProtectedRouteLayout() {
                         paddingX: '0 !important',
                     },
                 }}
-                className="bg-white max-w-[700px] max-h-[calc(100vh-110px)] overflow-x-hidden overflow-y-scroll h-full relative"
+                className="bg-white max-w-[700px] max-h-[calc(100vh-146px)] overflow-x-hidden overflow-y-scroll h-full relative"
             >
                 <Outlet />
             </Container>

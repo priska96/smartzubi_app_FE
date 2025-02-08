@@ -11,7 +11,7 @@ export default function OrderingAnswer({
     handleChange,
     result,
 }: AnswerContentProps) {
-    console.log(answers);
+    // console.log(answers);
     return (
         <FormControl
             className="!flex flex-1"

@@ -10,7 +10,7 @@ export default function CalculationAnswer({
     handleChange,
     result,
 }: AnswerContentProps) {
-    console.log(answers);
+    // console.log(answers);
     return (
         <FormControl
             className="!flex flex-1"
@@ -33,7 +33,7 @@ export default function CalculationAnswer({
                     }
                     if (result) {
                         val = result.ordered_answer_pairs[answer.id];
-                        console.log(val, answer.answer);
+                        // console.log(val, answer.answer);
                     }
                     return (
                         <div key={idx} className="relative">

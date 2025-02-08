@@ -1,4 +1,4 @@
-import { api, api_auth } from './axiosInstance';
+import { api, apiAuth } from './axiosInstance';
 
 export const createClientSecret = async ({
     user_id,
@@ -12,7 +12,7 @@ export const createClientSecret = async ({
     currency: string;
 }) => {
     try {
-        const response = await api_auth.post(`/api/payment/create-intent`, {
+        const response = await apiAuth.post(`/api/payment/create-intent`, {
             user_id,
             name,
             price,

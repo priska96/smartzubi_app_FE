@@ -1,4 +1,4 @@
-import { api, api_auth } from './axiosInstance';
+import { api, apiAuth } from './axiosInstance';
 import { User } from './models';
 import {
     LoginReqData,
@@ -43,7 +43,7 @@ export const login = async ({
 
 export const logout = async () => {
     try {
-        const response = await api_auth.post(
+        const response = await apiAuth.post(
             '/api/logout',
             {},
             { withCredentials: true }

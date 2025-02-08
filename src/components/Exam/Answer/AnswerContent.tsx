@@ -11,7 +11,7 @@ export default function AnswerContent({
     handleChange,
     result,
 }: AnswerContentProps) {
-    console.log(answers);
+    // console.log(answers);
     return (
         <Container className="flex">
             {currentQuestion.type === TypeEnum.multiple_choice && (

@@ -13,16 +13,17 @@ import {
     AnsweredQuestionIds,
     OrderCalcAnswer,
 } from '@/app/api/types';
+import ChatBot from '../ChatBot/ChatBot';
 
 export function Quiz({ exam_id }: { exam_id?: string }) {
     const { user } = useAuth();
     const query = useQuery();
-    console.log(user, query.get('user_exam'));
+    // console.log(user, query.get('user_exam'));
     const [exam, setExam] = useState<Exam | null>(null);
     const [answers, setAnswers] = useState<AnswerCollection>({});
     const [result, setResult] = useState<UserExam | null>(null);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(1 * 60); // 90min in sec
+    const [timeLeft, setTimeLeft] = useState(90 * 60); // 90min in sec
     const [isRunning, setIsRunning] = useState(true); // Timer is running by default
 
     useEffect(() => {
@@ -155,7 +156,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
     };
     const currentQuestion = exam?.questions[currentQuestionIndex];
 
-    console.log(exam);
+    // console.log(exam);
     return (
         <>
             {exam && (
@@ -185,7 +186,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                         </Typography>
                     )}
                     <Card
-                        className="mb-4 shadow-md py-5"
+                        className="mb-4 shadow-md py-5 relative"
                         key={currentQuestionIndex}
                     >
                         <QuestionContent
@@ -198,6 +199,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             handleChange={handleChange}
                             result={result}
                         />
+                        <ChatBot />
                     </Card>
                     <Stack
                         direction="row"
