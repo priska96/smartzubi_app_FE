@@ -1,101 +1,102 @@
-import { openAIApi } from '@/app/api';
-import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
+import {
+    Box,
+    Fab,
+    IconButton,
+    Paper,
+    TextField,
+    Typography,
+    Button,
+} from '@mui/material';
+import ChatIcon from '@mui/icons-material/Chat';
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function ChatBot() {
+const ChatBot = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const [val, setVal] = useState('');
-    const [result, setResult] = useState('');
-    const handleSubmit = async () => {
-        try {
-            const res = await openAIApi.post(
-                '',
-                JSON.stringify({
-                    model: 'gpt-4',
-                    messages: [
-                        {
-                            role: 'system',
-                            content:
-                                'You are now a friendly assistent that know everything about restaurant business and service.',
-                        },
-                        {
-                            role: 'user',
-                            content: val,
-                        },
-                    ],
-                })
-            );
-            console.log(res.data);
-            //setResult(res.data.messages[1].content);
-        } catch (e) {
-            console.error(e);
-        }
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
     };
 
     return (
-        <div className="chatBot fixed z-[1200] bottom-4 right-4">
-            {/* Chat Button */}
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none"
-            >
-                {isOpen ? '×' : '💬'}
-            </button>
+        <Box sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+            {/* Floating Action Button */}
+            <Fab color="primary" onClick={handleToggle}>
+                {isOpen ? <CloseIcon /> : <ChatIcon />}
+            </Fab>
 
             {/* Chat Window */}
             {isOpen && (
-                <div className="bg-white border border-gray-300 rounded-lg shadow-lg w-80 h-96 mt-2">
-                    <div className="flex items-center justify-between bg-blue-600 text-white p-2 rounded-t-lg">
-                        <span className="font-semibold">Chatbot</span>
-                        <button
-                            onClick={() => setIsOpen(false)}
-                            className="text-white hover:text-gray-300 focus:outline-none"
+                <Paper
+                    elevation={6}
+                    sx={{
+                        position: 'fixed',
+                        bottom: 80,
+                        right: 16,
+                        width: 300,
+                        height: 400,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        borderRadius: 2,
+                        overflow: 'hidden',
+                    }}
+                >
+                    {/* Header */}
+                    <Box
+                        sx={{
+                            backgroundColor: 'primary.main',
+                            color: 'white',
+                            padding: 1,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Typography variant="h6">Chatbot</Typography>
+                        <IconButton
+                            onClick={handleToggle}
+                            sx={{ color: 'white' }}
                         >
-                            ✕
-                        </button>
-                    </div>
-                    <div className="p-4 overflow-y-auto h-72">
-                        <p className="text-gray-600">
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+
+                    {/* Chat Messages */}
+                    <Box
+                        sx={{
+                            padding: 2,
+                            flex: 1,
+                            overflowY: 'auto',
+                            backgroundColor: '#f5f5f5',
+                        }}
+                    >
+                        <Typography variant="body2" color="textSecondary">
                             Hello! How can I assist you today?
-                        </p>
-                        {/* Chat messages can go here */}
-                    </div>
-                    <div className="p-2 border-t border-gray-300">
-                        {/* <input
-                            type="text"
-                            placeholder="Type a message..."
-                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                        /> */}
+                        </Typography>
+                    </Box>
+
+                    {/* Input Area */}
+                    <Box sx={{ padding: 1, borderTop: '1px solid #e0e0e0' }}>
                         <TextField
-                            sx={{
-                                flex: '0 0 100px',
-                                '.MuiInputBase-input': {
-                                    padding: '8px!important',
-                                    textAlign: 'center',
-                                    fontWeight: 'bold',
-                                    bgcolor: 'white',
-                                },
-                            }}
-                            className="min-w-[100px] w-[100px]"
-                            id="outlined-basic"
-                            disabled={!!result || false}
-                            label=""
+                            fullWidth
                             variant="outlined"
-                            value={val}
-                            onChange={(e) => setVal(e.target.value)}
+                            size="small"
+                            placeholder="Type a message..."
+                            sx={{ backgroundColor: 'white' }}
                         />
                         <Button
-                            className="!text-white"
                             variant="contained"
-                            type="submit"
-                            onClick={handleSubmit}
+                            size="small"
+                            sx={{ marginTop: 1, float: 'right' }}
                         >
-                            Absenden
+                            Send
                         </Button>
-                    </div>
-                </div>
+                    </Box>
+                </Paper>
             )}
-        </div>
+        </Box>
     );
-}
+};
+
+export default ChatBot;

@@ -11,16 +11,16 @@ import ExamPage from '@/pages/Exam/ExamPage';
 import ExamListPage from '@/pages/Exam/ExamListPage';
 import UserProfilePage from '@/pages/UserProfile/UserProfilePage';
 import ExamViewerPage from '@/pages/Exam/ExamViewerPage';
-import { useAuth } from '@/provider/AuthContext';
 
 import AppLayout from '@/AppLayout';
 import PaymentPage from '@/pages/payment/PaymentPage';
 import { SuccessDisplay } from '@/features/payment/SuccessDisplay';
 import { FreeMemberPage } from '@/pages/Forbidden/FreeMemberPage';
 import { LockedMemberPage } from '@/pages/Forbidden/LockedMemberPage';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 function Routes() {
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     const routesForPublic = [
         {
@@ -91,7 +91,7 @@ function Routes() {
         },
     ];
 
-    const routesForNotAuthenticatedOnly = user
+    const routesForNotAuthenticatedOnly: RouteObject[] = user
         ? [
               {
                   path: '/',

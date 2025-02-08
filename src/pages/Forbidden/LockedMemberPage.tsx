@@ -1,11 +1,11 @@
 import { Box, Typography, Button } from '@mui/material';
-import { useAuth } from '@/provider/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 export function LockedMemberPage() {
     const { t } = useTranslation();
 
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     const handleContactSupport = async () => {
         if (!user) return;

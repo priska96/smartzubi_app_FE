@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, CircularProgress } from '@mui/material';
 import UserExamTable from './UserExamTable';
-import { useAuth } from '@/provider/AuthContext';
 import { getUserExams } from '@/app/api';
 import { UserExam, User } from '../../app/api/models';
+import { useAuthUser } from '../authentication/hooks';
 
 function UserProfile() {
-    const { user } = useAuth();
+    const user = useAuthUser();
     const [exams, setExams] = useState<UserExam[]>([]);
     const [loading, setLoading] = useState(true);
 

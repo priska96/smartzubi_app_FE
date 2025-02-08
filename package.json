@@ -22,7 +22,7 @@
         "prettier"
     ],
     "scripts": {
-        "dev": "cross-env VITE_API_URL=http://localhost:8000 vite --open",
+        "dev": "cross-env VITE_API_URL=http://localhost:8000 VITE_DOMAIN=https://localhost:5173 vite --open",
         "start": "serve -s dist",
         "host": "vite --open --host",
         "build": "cross-env VITE_API_URL=https://smartzubi-backend-9a9dc1a5e4a6.herokuapp.com vite build",
@@ -42,6 +42,7 @@
         "@mui/icons-material": "^5.15.13",
         "@mui/material": "^5.15.13",
         "@reduxjs/toolkit": "^2.2.1",
+        "@sentry/react": "^8.54.0",
         "@stripe/react-stripe-js": "^2.8.0",
         "@stripe/stripe-js": "^4.3.0",
         "axios": "^1.7.9",
@@ -58,7 +59,8 @@
         "react-router-dom": "^6.22.3",
         "serve": "^14.2.4",
         "tailwind-merge": "^2.4.0",
-        "zod": "^3.23.8"
+        "zod": "^3.23.8",
+        "zustand": "^5.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.24.0",

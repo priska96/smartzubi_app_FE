@@ -18,10 +18,10 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthOutlet from './AuthOutlet';
-import { useAuth } from '@/provider/AuthContext';
 import { loginSchema } from '@/app/api';
 import { LoginReqData } from '@/app/api/types';
 import { isAxiosError } from 'axios';
+import { useLogin } from '@/features/authentication/hooks';
 
 function Login() {
     const { t } = useTranslation();
@@ -35,7 +35,7 @@ function Login() {
     });
 
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login } = useLogin();
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -89,6 +89,14 @@ function Login() {
                     {error}
                 </Alert>
             </Snackbar>
+            <button
+                onClick={() => {
+                    throw new Error('This is your first error!');
+                }}
+            >
+                Break the world
+            </button>
+            ;
             <TextField
                 {...register('email')}
                 error={!!errors.email}

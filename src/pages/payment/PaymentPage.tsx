@@ -1,9 +1,9 @@
 import { Typography, Stack, Container } from '@mui/material';
-import { useAuth } from '@/provider/AuthContext';
 import { CheckoutForm } from '@/features/payment/CheckoutForm';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 function PaymentPage() {
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     if (!user) {
         return <div>Loading...</div>;

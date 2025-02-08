@@ -6,11 +6,12 @@ import {
 import { useState } from 'react';
 import { createClientSecret } from '@/app/api';
 import { User } from '@/app/api/models';
-import { useAuth } from '@/provider/AuthContext';
+import { useAuthUser } from '../authentication/hooks';
+import { DOMAIN } from '@/constants';
 //import { StripeError } from '@stripe/stripe-js';
 
 export function CheckoutForm() {
-    const { user } = useAuth();
+    const user = useAuthUser();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -57,7 +58,7 @@ export function CheckoutForm() {
             elements,
             clientSecret: res.client_secret,
             confirmParams: {
-                return_url: 'http://localhost:5173/payment/success',
+                return_url: `${DOMAIN}/payment/success`,
             },
         });
 

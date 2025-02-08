@@ -4,19 +4,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/provider/AuthContext';
+import { useLogout } from '@/features/authentication/hooks';
 
 export default function BottomBar() {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const logout = useLogout();
 
     const handleLogout = () => {
-        logout()
-            .then(() => {
-                navigate('/login', { replace: true });
-                window.location.reload();
-            }) // forece reload to have correct jwt in headers
-            .catch((e) => console.log(e));
+        logout().catch((e) => console.log(e));
     };
 
     return (

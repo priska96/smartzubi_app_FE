@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/themes/utils';
 import { Exam, Question, TypeEnum, User, UserExam } from '@/app/api/models';
 import AnswerContent from './Answer/AnswerContent';
-import { useAuth } from '@/provider/AuthContext';
-import QuestionContent from './QuestionContent';
 import useQuery from '@/hooks/useQuery';
+import QuestionContent from './QuestionContent';
 import { createUserExam, getExam, getUserExam } from '@/app/api';
 import {
     AnswerCollection,
@@ -14,9 +13,10 @@ import {
     OrderCalcAnswer,
 } from '@/app/api/types';
 import ChatBot from '../ChatBot/ChatBot';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 export function Quiz({ exam_id }: { exam_id?: string }) {
-    const { user } = useAuth();
+    const user = useAuthUser();
     const query = useQuery();
     // console.log(user, query.get('user_exam'));
     const [exam, setExam] = useState<Exam | null>(null);

@@ -1,9 +1,9 @@
 import { Typography, Stack, Container } from '@mui/material';
 import ExamList from '@/components/Exam/ExamList';
-import { useAuth } from '@/provider/AuthContext';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 function ExamListPage() {
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     if (!user) {
         return <div>Loading...</div>;

@@ -1,9 +1,9 @@
 import { Typography, Stack, Container } from '@mui/material';
-import { useAuth } from '@/provider/AuthContext';
 import UserProfile from '@/features/userProfile/UserProfile';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 function UserProfilePage() {
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     if (!user) {
         return <div>Loading...</div>;

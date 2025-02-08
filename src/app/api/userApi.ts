@@ -1,5 +1,5 @@
 import { api, apiAuth } from './axiosInstance';
-import { UserExam } from './models';
+import { User, UserExam } from './models';
 import { CreateUserExamReqData } from './types';
 
 export const createUserExam = async ({
@@ -54,7 +54,10 @@ export type UserPatchRequest = {
     stripe_customer_id?: string;
 };
 
-export const updateUser = async (user_id: number, data: UserPatchRequest) => {
+export const updateUser = async (
+    user_id: number,
+    data: UserPatchRequest
+): Promise<User> => {
     try {
         const response = await api.patch(`/api/user/${user_id}`, data);
         return response.data;

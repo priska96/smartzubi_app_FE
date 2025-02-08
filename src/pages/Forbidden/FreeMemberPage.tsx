@@ -1,12 +1,12 @@
 import { Box, Typography, Button } from '@mui/material';
-import { useAuth } from '@/provider/AuthContext';
 import { createCheckoutSession, STANDARD_MONTHLY } from '@/app/api';
 import { useTranslation } from 'react-i18next';
+import { useAuthUser } from '@/features/authentication/hooks';
 
 export function FreeMemberPage() {
     const { t } = useTranslation();
 
-    const { user } = useAuth();
+    const user = useAuthUser();
 
     const handleCreateCheckoutSession = async () => {
         if (!user) return;

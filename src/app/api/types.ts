@@ -1,4 +1,4 @@
-import { TypeEnum } from './models';
+import { TypeEnum, User } from './models';
 
 export type RegisterReqData = {
     username: string;
@@ -13,9 +13,9 @@ export type LoginReqData = {
     password: string;
 };
 export type LoginResData = {
-    access_token: string;
-    refresh_token: string;
-    user_id: number;
+    access_token?: string;
+    refresh_token?: string;
+    user?: User;
 };
 export type TokenRefreshReqData = {
     refreshToken: string;

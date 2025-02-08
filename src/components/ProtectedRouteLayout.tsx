@@ -1,19 +1,22 @@
 import { Container } from '@mui/material';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/provider/AuthContext';
 import BottomBar from './ContentOutlet/BottomBar';
 import { Logo } from './Logo';
+import { useAuthUser } from '@/features/authentication/hooks';
+import { isPaying, isLocked, useAuthStore } from '@/store';
 
 export function ProtectedRouteLayout() {
-    const { user } = useAuth();
+    const user = useAuthUser();
+    const isPayingUser = useAuthStore(isPaying);
+    const isLockedUser = useAuthStore(isLocked);
 
     if (!user || Object.keys(user).length === 0) {
         return <Navigate to="/login" />;
     }
-    if (!user.is_paying) {
+    if (!isPayingUser) {
         return <Navigate to="/forbidden-free-member" />;
     }
-    if (user.locked) {
+    if (isLockedUser) {
         return <Navigate to="/forbidden-locked-member" />;
     }
 

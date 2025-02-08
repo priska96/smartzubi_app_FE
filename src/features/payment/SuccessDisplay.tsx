@@ -1,18 +1,18 @@
 import { Box, Typography, Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/provider/AuthContext';
 import { getCustomerBySessionId, updateUser } from '@/app/api';
+import { useAuthStore } from '@/store';
 
 export function SuccessDisplay() {
     const query = new URLSearchParams(window.location.search);
-    const { setUser } = useAuth();
+    const { setAuthUser } = useAuthStore();
     const session_id = query.get('session_id');
     const user_id = query.get('user_id');
     const navigate = useNavigate(); // To programmatically navigate
 
     useEffect(() => {
-        if (session_id && user_id && setUser) {
+        if (session_id && user_id && setAuthUser) {
             getCustomerBySessionId({ session_id })
                 .then((res) => {
                     if (res.stripe_customer_id) {
@@ -20,13 +20,13 @@ export function SuccessDisplay() {
                             stripe_customer_id: res.stripe_customer_id,
                             is_paying: true,
                         })
-                            .then((data) => setUser(data))
+                            .then((data) => setAuthUser(data))
                             .catch((error) => console.log(error));
                     }
                 })
                 .catch((error) => console.log(error));
         }
-    }, [session_id, user_id, setUser]);
+    }, [session_id, user_id, setAuthUser]);
 
     return (
         <Box className="flex flex-col gap-5  max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-lg shadow-lg text-center">
