@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,6 +15,8 @@ import AuthOutlet from './AuthOutlet';
 import { ProductDisplay } from '@/features/payment/ProductDisplay';
 
 function Register() {
+    const { t } = useTranslation();
+
     const {
         register: registerForm,
         handleSubmit,
@@ -45,7 +48,7 @@ function Register() {
                 error={!!errors.username}
                 helperText={errors.username?.message}
                 required
-                label="Username"
+                label={t('register.username')}
                 variant="outlined"
                 sx={{
                     '.MuiOutlinedInput-notchedOutline': {
@@ -59,7 +62,7 @@ function Register() {
                 helperText={errors.email?.message}
                 required
                 type="email"
-                label="E-mail"
+                label={t('register.email')}
                 variant="outlined"
                 autoComplete="off"
                 sx={{
@@ -74,7 +77,7 @@ function Register() {
                 helperText={errors.password?.message}
                 required
                 type="password"
-                label="Password"
+                label={t('register.password')}
                 variant="outlined"
                 sx={{
                     '.MuiOutlinedInput-notchedOutline': {
@@ -88,7 +91,7 @@ function Register() {
                 helperText={errors.passwordConf?.message}
                 required
                 type="password"
-                label="Password (again)"
+                label={t('register.password_conf')}
                 variant="outlined"
                 sx={{
                     '.MuiOutlinedInput-notchedOutline': {
@@ -100,19 +103,19 @@ function Register() {
             <ProductDisplay registerForm={registerForm} errors={errors} />
 
             <Button variant="contained" type="submit">
-                Sign Up
+                {t('register.signUp')}
             </Button>
 
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Typography variant="body2" component="p">
-                    Already have an account?
+                    {t('register.have_account')}
                 </Typography>
                 <Link
                     variant="body2"
                     sx={{ display: 'inline', ml: 1 }}
                     onClick={() => navigate('/login')}
                 >
-                    Sign In
+                    {t('register.signIn')}
                 </Link>
             </Box>
         </AuthOutlet>

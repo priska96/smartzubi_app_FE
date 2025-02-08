@@ -1,7 +1,30 @@
 {
+    "register": {
+        "username": "Tên người dùng",
+        "email": "Thư điện tử",
+        "password": "Mật khẩu",
+        "password_conf": "Xác nhận mật khẩu",
+        "have_account": "Đã có tài khoản?",
+        "signUp": "Đăng ký",
+        "signIn": "Đăng nhập",
+        "pick_only_one": "Chỉ chọn một"
+    },
     "login": {
-        "email": "thư điện tử",
-        "password": "mật khẩu"
+        "email": "Thư điện tử",
+        "password": "Mật khẩu",
+        "forgot_password": "Quên mật khẩu?",
+        "signIn": "Đăng nhập",
+        "no_account": "Chưa có tài khoản?",
+        "register_here": "Đăng ký tại đây"
+    },
+    "auth": {
+        "wrong_email": "Địa chỉ email không đúng.",
+        "email_exists": "Địa chỉ email đã tồn tại.",
+        "wrong_password": "Mật khẩu không đúng.",
+        "account_locked": "Tài khoản bị khóa. Vui lòng liên hệ với bộ phận hỗ trợ.",
+        "account_has_sessoin": "Đã đăng nhập. Nếu tiếp tục thử, tài khoản của bạn sẽ bị khóa.",
+        "account_too_many_attempts": "Tài khoản đã bị khóa do quá nhiều lần đăng nhập sai.",
+        "could_not_validate_credentials": "Không thể xác minh thông tin đăng nhập."
     },
     "forbidden": {
         "free-member": {

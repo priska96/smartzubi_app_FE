@@ -1,8 +1,13 @@
 import { useAuthStore } from '@/store';
 
-export const useAuth = () => {
+export const useAuthAccessToken = () => {
     const accessToken = useAuthStore((state) => state.auth?.access_token);
-    return accessToken ? { isRoot: false } : null;
+    return accessToken;
+};
+
+export const useAuthRefreshToken = () => {
+    const refreshToken = useAuthStore((state) => state.auth?.refresh_token);
+    return refreshToken;
 };
 
 export const useAuthUser = () => {

@@ -91,7 +91,7 @@ function Routes() {
         },
     ];
 
-    const routesForNotAuthenticatedOnly: RouteObject[] = user
+    const routesForNotAuthenticatedOnly: RouteObject[] = !user
         ? [
               {
                   path: '/',

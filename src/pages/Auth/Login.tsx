@@ -65,7 +65,8 @@ function Login() {
             if (isAxiosError(error)) {
                 console.error('Login failed', error);
                 setError(
-                    error.response?.data?.detail || 'An unknown error occurred'
+                    t(`auth.${error.response?.data?.detail}`) ||
+                        'An unknown error occurred'
                 );
             } else {
                 console.error('Unexpected error', error);
@@ -89,14 +90,6 @@ function Login() {
                     {error}
                 </Alert>
             </Snackbar>
-            <button
-                onClick={() => {
-                    throw new Error('This is your first error!');
-                }}
-            >
-                Break the world
-            </button>
-            ;
             <TextField
                 {...register('email')}
                 error={!!errors.email}
@@ -150,23 +143,23 @@ function Login() {
                     textAlign="right"
                     onClick={() => navigate('/forgot-password')}
                 >
-                    Forgot password?
+                    {t('login.forgot_password')}
                 </Link>
 
                 <Button variant="contained" type="submit">
-                    Log in
+                    {t('login.signIn')}
                 </Button>
             </Stack>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Typography variant="body2" component="p">
-                    No account yet?
+                    {t('login.no_account')}
                 </Typography>
                 <Link
                     variant="body2"
                     sx={{ display: 'inline', ml: 1 }}
                     onClick={() => navigate('/register')}
                 >
-                    Register here
+                    {t('login.register_here')}
                 </Link>
             </Box>
         </AuthOutlet>

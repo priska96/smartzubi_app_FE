@@ -1,7 +1,30 @@
 {
+    "register": {
+        "username": "Nutzername",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "password_conf": "Passwort bestätigen",
+        "have_account": "Bereits ein Konto?",
+        "signUp": "Registrieren",
+        "signIn": "Einloggen",
+        "pick_only_one": "Wähle nur eine"
+    },
     "login": {
         "email": "E-Mail",
-        "password": "Passwort"
+        "password": "Passwort",
+        "forgot_password": "Passwort vergessen?",
+        "signIn": "Einloggen",
+        "no_account": "Kein Konto?",
+        "register_here": "Hier registrieren"
+    },
+    "auth": {
+        "wrong_email": "Falsche E-Mail-Adresse.",
+        "email_exists": "E-Mail Adresse existiert bereits.",
+        "wrong_password": "Falsches Passwort.",
+        "account_locked": "Account ist gesperrt. Bitte kontaktiere den Support.",
+        "account_has_sessoin": "Bereits eingeloggt. Bei weiteren Versuchen wird dein Account gesperrt.",
+        "account_too_many_attempts": "Account wurde gesperrt aufgrund von zu vielen weiteren Loginversuchen.",
+        "could_not_validate_credentials": "Konnte die Anmeldeinformationen nicht überprüfen."
     },
     "forbidden": {
         "free-member": {

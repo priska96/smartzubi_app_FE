@@ -7,6 +7,7 @@ import {
     getAllStripeProducts,
     STANDARD_MONTHLY,
 } from '@/app/api';
+import { useTranslation } from 'react-i18next';
 
 export function ProductDisplay({
     registerForm,
@@ -15,6 +16,8 @@ export function ProductDisplay({
     registerForm: UseFormRegister<FieldValues>;
     errors: FieldErrors<FieldValues>;
 }) {
+    const { t } = useTranslation();
+
     const [products, setProducts] = useState<StripeProduct[]>([]);
     useEffect(() => {
         getAllStripeProducts({
@@ -47,7 +50,7 @@ export function ProductDisplay({
                             ) : (
                                 <h5>
                                     {product.unit_amount / 100} EUR /{' '}
-                                    {product.recurring.interval}
+                                    {product.recurring?.interval}
                                 </h5>
                             )}
                         </div>
@@ -57,7 +60,7 @@ export function ProductDisplay({
 
             {(!!errors.free_membership || !!errors.standard_monthly) && (
                 <FormHelperText className="w-full">
-                    You can only pick one
+                    {t('register.pick_only_one')}
                 </FormHelperText>
             )}
         </FormControl>
