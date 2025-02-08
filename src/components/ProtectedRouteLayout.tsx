@@ -4,6 +4,7 @@ import BottomBar from './ContentOutlet/BottomBar';
 import { Logo } from './Logo';
 import { useAuthUser } from '@/features/authentication/hooks';
 import { isPaying, isLocked, useAuthStore } from '@/store';
+import { SwitchLanguageButton } from './SwitchLanguageButton';
 
 export function ProtectedRouteLayout() {
     const user = useAuthUser();
@@ -35,6 +36,7 @@ export function ProtectedRouteLayout() {
                 }}
                 className="bg-white max-w-[700px] max-h-[calc(100vh-146px)] overflow-x-hidden overflow-y-scroll h-full relative"
             >
+                <SwitchLanguageButton />
                 <Outlet />
             </Container>
             <BottomBar />
