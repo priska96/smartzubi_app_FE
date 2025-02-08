@@ -5,15 +5,14 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Routes from './routes';
 import AuthProvider from './provider/authProvider';
-import { initSentry } from './config/sentry';
+// import { initSentry } from './config/sentry';
 import { useApplyToken } from './features/authentication/hooks';
 import { useAuthStore } from './store';
+import { STRIPE_API_KEY } from './constants';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-    'pk_test_51PraP7DQCLG7VmT2cjVzcRaBoMgw8vPZZT4ABeJHdIaQVAd70YkRJSuqitVYK5n6vjr0l4v0YmUWM1K0h3HxOAMD006Hgg8tQb'
-);
+const stripePromise = loadStripe(STRIPE_API_KEY);
 
 enum PaymentMode {
     Payment = 'payment',
@@ -34,9 +33,9 @@ function App() {
         // clientSecret: CLIENT_SECRET,
     };
 
-    React.useEffect(() => {
-        initSentry();
-    }, []);
+    // React.useEffect(() => {
+    //     initSentry();
+    // }, []);
 
     useEffect(() => {
         applyToken(auth?.access_token || '');
@@ -45,10 +44,10 @@ function App() {
     return (
         <ErrorBoundary>
             <Elements stripe={stripePromise} options={options}>
-                {/* <AuthProvider> */}
-                <CssBaseline />
-                <Routes />
-                {/* </AuthProvider> */}
+                <AuthProvider>
+                    <CssBaseline />
+                    <Routes />
+                </AuthProvider>
             </Elements>
         </ErrorBoundary>
     );

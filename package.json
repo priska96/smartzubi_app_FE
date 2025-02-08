@@ -22,10 +22,10 @@
         "prettier"
     ],
     "scripts": {
-        "dev": "cross-env VITE_API_URL=http://localhost:8000 VITE_DOMAIN=https://localhost:5173 vite --open",
+        "dev": "vite --open",
         "start": "serve -s dist",
         "host": "vite --open --host",
-        "build": "cross-env VITE_API_URL=https://smartzubi-backend-9a9dc1a5e4a6.herokuapp.com vite build",
+        "build": "cross-env vite build",
         "preview": "vite preview",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix",
