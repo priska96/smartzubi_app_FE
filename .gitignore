@@ -134,3 +134,5 @@ out
 # VSC
 .vscode/
 .DS_Store
+
+dist

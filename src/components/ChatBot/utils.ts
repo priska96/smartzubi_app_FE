@@ -6,14 +6,13 @@ async function initTiktoken() {
     return tokenizer;
 }
 
-const tokenizer = await initTiktoken();
-
 /**
  * Counts the tokens in a given message or text.
  * @param text - The text to count tokens for
  * @returns Number of tokens
  */
-export const countTokens = (text: string): number => {
+export const countTokens = async (text: string): Promise<number> => {
+    const tokenizer = await initTiktoken();
     return tokenizer.encode(text).length;
 };
 
@@ -22,11 +21,15 @@ export const countTokens = (text: string): number => {
  * @param messages - An array of message objects containing role and content
  * @returns Total number of tokens in the conversation
  */
-export const countTokensInMessages = (messages: Message[]): number => {
+export const countTokensInMessages = async (
+    messages: Message[]
+): Promise<number> => {
     let totalTokens = 0;
     for (const message of messages) {
         // Add tokens for the role (user/assistant) and message content
-        totalTokens += countTokens(message.role) + countTokens(message.content);
+        totalTokens +=
+            (await countTokens(message.role)) +
+            (await countTokens(message.content));
     }
     return totalTokens;
 };

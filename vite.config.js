@@ -11,6 +11,11 @@ export default defineConfig({
     ],
     build: {
         sourcemap: false,
+        target: 'esnext', // Allow modern syntax like Top-Level `await`
+        minify: 'esbuild', // Default minifier
+    },
+    esbuild: {
+        target: 'esnext', // Ensure esbuild targets ESNext features
     },
     resolve: {
         alias: {

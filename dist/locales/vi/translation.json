@@ -1,7 +1,35 @@
 {
+    "register": {
+        "username": "Tên người dùng",
+        "email": "Thư điện tử",
+        "password": "Mật khẩu",
+        "password_conf": "Xác nhận mật khẩu",
+        "have_account": "Đã có tài khoản?",
+        "signUp": "Đăng ký",
+        "signIn": "Đăng nhập",
+        "pick_only_one": "Chỉ chọn một"
+    },
+    "registration_success": {
+        "title": "Đăng ký thành công!",
+        "message": "Cảm ơn bạn đã đăng ký thành viên Pro. Hãy tận hưởng những lợi ích của bạn!",
+        "button": "Quay lại Đăng nhập"
+    },
     "login": {
-        "email": "thư điện tử",
-        "password": "mật khẩu"
+        "email": "Thư điện tử",
+        "password": "Mật khẩu",
+        "forgot_password": "Quên mật khẩu?",
+        "signIn": "Đăng nhập",
+        "no_account": "Chưa có tài khoản?",
+        "register_here": "Đăng ký tại đây"
+    },
+    "auth": {
+        "wrong_email": "Địa chỉ email không đúng.",
+        "email_exists": "Địa chỉ email đã tồn tại.",
+        "wrong_password": "Mật khẩu không đúng.",
+        "account_locked": "Tài khoản bị khóa. Vui lòng liên hệ với bộ phận hỗ trợ.",
+        "account_has_sessoin": "Đã đăng nhập. Nếu tiếp tục thử, tài khoản của bạn sẽ bị khóa.",
+        "account_too_many_attempts": "Tài khoản đã bị khóa do quá nhiều lần đăng nhập sai.",
+        "could_not_validate_credentials": "Không thể xác minh thông tin đăng nhập."
     },
     "forbidden": {
         "free-member": {
@@ -14,5 +42,31 @@
             "access-denied": "Tài khoản của bạn đã bị khóa. Truy cập bị từ chối",
             "contact-us": "Liên hệ với bộ phận hỗ trợ"
         }
+    },
+    "exams": {
+        "list_title": "Danh sách kỳ thi IHK",
+        "pdf_title": "PDF kỳ thi IHK",
+        "exam": {
+            "score": "Điểm số",
+            "time_left": "Thời gian còn lại",
+            "back_button": "Quay lại",
+            "next_button": "Tiếp theo",
+            "send_button": "Gửi",
+            "situation": "Tình huống",
+            "hint": "Gợi ý",
+            "solution_hint": "Gợi ý giải pháp"
+        }
+    },
+    "payment": {
+        "checkout": "Thanh toán"
+    },
+    "profile": {
+        "title": "Hồ sơ"
+    },
+    "chatbot": {
+        "welcome_message": "Xin chào! Tôi có thể giúp gì cho bạn?",
+        "placeholder": "Đặt câu hỏi...",
+        "send": "Gửi",
+        "typing_indicator": "Đang gõ"
     }
 }

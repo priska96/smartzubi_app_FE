@@ -73,7 +73,7 @@ const ChatBot = ({ examId }: ChatBorProps) => {
             setIsNewMessageLoading(true);
 
             let prevMsgToSend = currentMessages;
-            const totalTokens = countTokensInMessages([
+            const totalTokens = await countTokensInMessages([
                 ...(chatBot?.[examId].messageList ?? []),
                 { role: 'user', content: message },
             ]);
