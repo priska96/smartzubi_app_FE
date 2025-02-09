@@ -45,12 +45,28 @@
     },
     "exams": {
         "list_title": "IHK Prüfungen",
-        "pdf_title": "IHK Prüfung PDF"
+        "pdf_title": "IHK Prüfung PDF",
+        "exam": {
+            "score": "Testergebnis",
+            "time_left": "Verbleibende Zeit",
+            "back_button": "Zurück",
+            "next_button": "Weiter",
+            "send_button": "Abschicken",
+            "situation": "Situation",
+            "hint": "Hinweis",
+            "solution_hint": "Lösungshinweis"
+        }
     },
     "payment": {
         "checkout": "Zur Kasse"
     },
     "profile": {
         "title": "Profil"
+    },
+    "chatbot": {
+        "welcome_message": "Hallo! Wie kann ich dir helfen?",
+        "placeholder": "Stelle eine Frage...",
+        "send": "Abschicken",
+        "typing_indicator": "Schreibt"
     }
 }

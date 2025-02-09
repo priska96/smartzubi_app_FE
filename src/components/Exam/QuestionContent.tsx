@@ -9,17 +9,16 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
+import { useTranslation } from 'react-i18next';
 
 export default function QuestionContent(props: {
     question: Question;
     hasResult: boolean;
 }) {
+    const { t } = useTranslation();
     return (
         <Container>
             <Typography className="!mb-4" textAlign="center" variant="h2">
-                {props.question.title}
-            </Typography>
-            <Typography>
                 <span className="mr-2">{props.question.question}</span>
                 <span className="font-bold">
                     ({props.question.points.toString()}Pkt.)
@@ -31,7 +30,7 @@ export default function QuestionContent(props: {
                         expandIcon={<ExpandMoreIcon />}
                         className="!text-sky-500 font-bold"
                     >
-                        Situation
+                        {t('exams.exam.situation')}
                     </AccordionSummary>
                     <AccordionDetails className="whitespace-pre-line">
                         {props.question.situation}
@@ -44,7 +43,7 @@ export default function QuestionContent(props: {
                         expandIcon={<ExpandMoreIcon />}
                         className="!text-sky-500 font-bold"
                     >
-                        Hinweis
+                        {t('exams.exam.hint')}
                     </AccordionSummary>
                     <AccordionDetails className="whitespace-pre-line">
                         {props.question.hint}
@@ -57,7 +56,7 @@ export default function QuestionContent(props: {
                         expandIcon={<ExpandMoreIcon />}
                         className="!text-sky-500 font-bold"
                     >
-                        Lösungshinweis
+                        {t('exams.exam.solution_hint')}
                     </AccordionSummary>
                     <AccordionDetails className="whitespace-pre-line">
                         <Latex>{props.question.solution_hint}</Latex>

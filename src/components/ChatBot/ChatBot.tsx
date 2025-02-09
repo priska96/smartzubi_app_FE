@@ -1,84 +1,95 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Box, Fab, IconButton, Paper, Typography, Button } from '@mui/material';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+    Box,
+    Fab,
+    IconButton,
+    Paper,
+    Typography,
+    Button,
+    TextField,
+} from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
-import { cn } from '@/themes/utils';
 import { Message, sendMessage } from '@/app/api/chatBotApi';
+import { useChatBotStore } from '@/store';
+import { useTranslation } from 'react-i18next';
+import { TypingIndicator } from '../TypingIndicator';
+import { countTokensInMessages } from './utils';
+import { TOKEN_LIMIT } from '@/constants';
+import { LoadingIndicator } from '../LoadingIndicator';
 
-const ChatBot = () => {
+interface ChatBorProps {
+    examId: number;
+}
+const ChatBot = ({ examId }: ChatBorProps) => {
+    const { t } = useTranslation();
+    const chatWindowRef = useRef<HTMLDivElement>(null);
+    const { chatBot, addMessages } = useChatBotStore();
+    const currentMessages = chatBot?.[examId].messageList ?? [];
     const [isOpen, setIsOpen] = useState(false);
+    const [isNewMessageLoading, setIsNewMessageLoading] = useState(false);
+
+    const [message, setMessage] = useState('');
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
+    const scrollChatWindow = () => {
+        if (chatWindowRef.current) {
+            chatWindowRef.current.scrollTo({
+                top: chatWindowRef.current.scrollHeight,
+                behavior: 'smooth',
+            });
+        }
+    };
+    useEffect(() => {
+        if (isOpen) {
+            scrollChatWindow();
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            scrollChatWindow();
+        }
+    }, [isOpen, currentMessages]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.target.value);
     };
 
-    const [isNewMessageLoading, setIsNewMessageLoading] = useState(false);
-
-    const [messageList, setMessageList] = useState<Message[]>([
-        {
-            role: 'system',
-            content:
-                'Du bist Ausbilder im Bereich Gastronomie und Service und Restaurantgewerbe. ' +
-                'Du kannst alle fragen der IHK Prüfungen korrekt beantworten. ' +
-                'Du antwortest immer zuerst auf deutsch und schickst dann auch immer direkt die vietnamesische Übersetzung mit. ',
-        },
-    ]);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [message, setMessage] = useState('');
-
-    useEffect(() => {
-        // Automatically adjust the height of the textarea based on the content
-        const textarea = textareaRef.current;
-        const maxHeight = 150;
-
-        if (textarea) {
-            textarea.style.height = 'auto';
-            const newHeight = Math.min(textarea.scrollHeight, maxHeight);
-            textarea.style.height = `${newHeight}px`;
-
-            // border-radius depending on height
-            const isExpanded = newHeight > 56;
-            textarea.style.borderRadius = isExpanded ? '15px' : '9999px';
-
-            // If the new height reaches maxHeight, enable scroll inside the textarea
-            textarea.style.overflowY =
-                newHeight >= maxHeight ? 'auto' : 'hidden';
-        }
-    }, [message]);
-
-    // const updateText = (text: string) => {
-    //     setMessage((prev) =>
-    //         prev.length === 0 ? prev + '' + text : prev + ' ' + text
-    //     );
-    // };
-
-    // const clearMessage = (
-    //     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    // ) => {
-    //     e.preventDefault();
-    //     setMessage('');
-    // };
-
-    const isMessageEmpty = !message.trim();
+    const trimMessageList = () => {
+        const newList = [currentMessages[0]];
+        newList.push(...currentMessages.slice(-5)); // Only keep the last 5 messages
+        return newList;
+    };
 
     const handleSubmit = async () => {
+        scrollChatWindow();
+
         if (!message.trim()) return; // Prevent submission if message is empty or whitespace
         try {
             setMessage('');
             setIsNewMessageLoading(true);
 
-            const res = await sendMessage(messageList, message);
+            let prevMsgToSend = currentMessages;
+            const totalTokens = countTokensInMessages([
+                ...(chatBot?.[examId].messageList ?? []),
+                { role: 'user', content: message },
+            ]);
+            console.log('Total tokens:', totalTokens);
+            // Check if token count exceeds the limit
+            if (totalTokens > TOKEN_LIMIT) {
+                console.log('You are exceeding the token limit.');
+                prevMsgToSend = trimMessageList();
+            }
+            const res = await sendMessage(prevMsgToSend, message);
 
             if (!res) {
                 setIsNewMessageLoading(false);
                 return;
             }
-            setMessageList([
-                ...messageList,
+            addMessages(examId, [
                 { role: 'user', content: message },
                 {
                     role: 'assistant',
@@ -94,7 +105,7 @@ const ChatBot = () => {
     };
 
     return (
-        <Box sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1200 }}>
+        <Box sx={{ position: 'fixed', bottom: 70, right: 16, zIndex: 1200 }}>
             {/* Floating Action Button */}
             <Fab color="primary" onClick={handleToggle}>
                 {isOpen ? <CloseIcon /> : <ChatIcon />}
@@ -106,7 +117,7 @@ const ChatBot = () => {
                     elevation={6}
                     sx={{
                         position: 'fixed',
-                        bottom: 80,
+                        bottom: 130,
                         right: 16,
                         width: 450,
                         height: 500,
@@ -128,7 +139,7 @@ const ChatBot = () => {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography variant="h6">Chatbot</Typography>
+                        <Typography variant="h6">Chatbot </Typography>
                         <IconButton
                             onClick={handleToggle}
                             sx={{ color: 'white' }}
@@ -146,82 +157,101 @@ const ChatBot = () => {
                             backgroundColor: '#f5f5f5',
                             flexDirection: 'column',
                         }}
+                        ref={chatWindowRef}
                     >
-                        <Typography variant="body2" color="textSecondary">
-                            Hello! How can I assist you today?
-                        </Typography>
-                        {isNewMessageLoading && <div>Loading</div>}
-                        {messageList.slice(1).map((msg, index) => (
+                        <Box
+                            sx={{
+                                padding: 1,
+                                color: 'text.secondary',
+                                display: 'inline-block',
+                                width: '100%',
+                                textAlign: 'left',
+                            }}
+                        >
                             <Typography
-                                key={index}
                                 variant="body1"
                                 sx={{
                                     padding: 1,
                                     borderRadius: 1,
-                                    borderColor:
-                                        msg.role === 'assistant'
-                                            ? 'primary.main'
-                                            : 'transparent',
+                                    borderColor: 'primary.main',
                                     borderWidth: 1,
-                                    backgroundColor:
-                                        msg.role === 'assistant'
-                                            ? '#f5f5f5'
-                                            : 'primary.main',
-                                    color:
-                                        msg.role === 'assistant'
-                                            ? 'text.secondary'
-                                            : 'white',
+                                    backgroundColor: '#f5f5f5',
+                                    color: 'text.secondary',
                                     display: 'inline-block',
                                     maxWidth: '80%',
-                                    marginLeft:
-                                        msg.role !== 'assistant' ? '20%' : '0',
-                                    marginTop: 2,
                                 }}
                             >
-                                {msg.content}
+                                {t('chatbot.welcome_message')}
                             </Typography>
+                        </Box>
+                        {currentMessages?.slice(1).map((msg, index) => (
+                            <Box
+                                key={index}
+                                sx={{
+                                    color: 'text.secondary',
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    marginTop: 1 / 2,
+                                }}
+                            >
+                                <Typography
+                                    variant="body1"
+                                    sx={{
+                                        padding: 1,
+                                        borderRadius: 1,
+                                        borderColor:
+                                            msg.role === 'assistant'
+                                                ? 'primary.main'
+                                                : 'transparent',
+                                        borderWidth: 1,
+                                        backgroundColor:
+                                            msg.role === 'assistant'
+                                                ? '#f5f5f5'
+                                                : 'primary.main',
+                                        color:
+                                            msg.role === 'assistant'
+                                                ? 'text.secondary'
+                                                : 'white',
+                                        display: 'block',
+                                        maxWidth: '80%',
+                                        float:
+                                            msg.role === 'user'
+                                                ? 'right'
+                                                : 'left',
+                                    }}
+                                >
+                                    {msg.content}
+                                </Typography>
+                            </Box>
                         ))}
+                        {isNewMessageLoading && <TypingIndicator />}
                     </Box>
 
                     {/* Input Area */}
                     <Box sx={{ padding: 1, borderTop: '1px solid #e0e0e0' }}>
-                        {/* <TextField
+                        <TextField
                             fullWidth
                             variant="outlined"
                             size="small"
-                            placeholder="Type a message..."
-                            sx={{ backgroundColor: 'white' }}
-                            value={val}
-                            onChange={(e) => setVal(e.target.value)}
-                        /> */}
-                        <textarea
-                            ref={textareaRef}
-                            id="chat"
-                            rows={1}
-                            className={cn(
-                                'min-h-[56px] w-full resize-none rounded-full border border-blue-light bg-white px-4 pb-[16px] pt-[13px] leading-[24px] text-gray-950 placeholder-greyScale-70 focus-visible:border-blue-full focus-visible:outline-none',
-                                {
-                                    'border-0 text-center placeholder-red-600':
-                                        isMessageEmpty,
+                            placeholder={t('chatbot.placeholder')}
+                            sx={{
+                                '.MuiOutlinedInput-notchedOutline': {
+                                    borderColor: '#a1a1aa',
                                 },
-                                {
-                                    'border-0 px-10 text-left text-red-600 placeholder-red-600':
-                                        !isMessageEmpty,
-                                },
-                                { 'pr-10': !isMessageEmpty }
-                            )}
-                            placeholder={'Stelle eine Frage...'}
+                            }}
                             value={message}
                             onChange={handleChange}
-                            //onKeyDown={handleKeyDown}
+                            multiline
+                            maxRows={5}
                         />
                         <Button
                             variant="contained"
                             size="small"
                             sx={{ marginTop: 1, float: 'right' }}
                             onClick={handleSubmit}
+                            disabled={isNewMessageLoading}
                         >
-                            Send
+                            {t('chatbot.send')}
                         </Button>
                     </Box>
                 </Paper>

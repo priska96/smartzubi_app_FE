@@ -14,9 +14,14 @@ import {
 } from '@/app/api/types';
 import ChatBot from '../ChatBot/ChatBot';
 import { useAuthUser } from '@/features/authentication/hooks';
+import { useChatBotStore } from '@/store';
+import { useTranslation } from 'react-i18next';
 
 export function Quiz({ exam_id }: { exam_id?: string }) {
+    const { t } = useTranslation();
     const user = useAuthUser();
+    const { initializeChatRoom } = useChatBotStore();
+
     const query = useQuery();
     // console.log(user, query.get('user_exam'));
     const [exam, setExam] = useState<Exam | null>(null);
@@ -29,7 +34,10 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
     useEffect(() => {
         if (!exam_id) return;
         getExam(parseInt(exam_id))
-            .then((response) => setExam(response))
+            .then((response) => {
+                setExam(response);
+                initializeChatRoom(response.id, (user as User).id);
+            })
             .catch((error) => console.log(error));
     }, [exam_id]);
 
@@ -174,7 +182,8 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             className="!mb-4"
                             variant="h3"
                         >
-                            Testergebnis: {result.score}/ {result.score_total}
+                            {t('exams.exam.score')}: {result.score}/{' '}
+                            {result.score_total}
                         </Typography>
                     ) : (
                         <Typography
@@ -182,7 +191,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             className="!mb-4"
                             variant="h3"
                         >
-                            verbleibende Zeit: {formatTime(timeLeft)}
+                            {t('exams.exam.time_left')}: {formatTime(timeLeft)}
                         </Typography>
                     )}
                     <Card
@@ -199,7 +208,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             handleChange={handleChange}
                             result={result}
                         />
-                        <ChatBot />
+                        <ChatBot examId={parseInt(exam_id ?? '-1')} />
                     </Card>
                     <Stack
                         direction="row"
@@ -216,7 +225,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                                 )
                             }
                         >
-                            Zurück
+                            {t('exams.exam.back_button')}
                         </Button>
                         {currentQuestionIndex === exam.questions.length - 1 ? (
                             result ? (
@@ -225,7 +234,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                                     variant="contained"
                                     disabled
                                 >
-                                    Weiter
+                                    {t('exams.exam.next_button')}
                                 </Button>
                             ) : (
                                 <Button
@@ -234,7 +243,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                                     type="submit"
                                     onClick={handleSubmit}
                                 >
-                                    Absenden
+                                    {t('exams.exam.send_button')}
                                 </Button>
                             )
                         ) : (
@@ -247,7 +256,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                                     )
                                 }
                             >
-                                Weiter
+                                {t('exams.exam.next_button')}
                             </Button>
                         )}
                     </Stack>

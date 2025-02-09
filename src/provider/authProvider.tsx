@@ -52,7 +52,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                     setAuthUser(userData);
                 } catch {
                     console.log('Failed to get user');
-                    await refreshTokens();
+                    // await refreshTokens();
                 }
             } else {
                 setAuth(undefined);

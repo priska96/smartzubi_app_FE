@@ -10,9 +10,6 @@ export type AuthState = {
     setAuthUser: (auth: User | undefined) => void;
 };
 
-/**
- * returns true if user license is not free
- */
 export const isPaying = (state: AuthState) => state.auth?.user?.is_paying;
 
 export const isLocked = (state: AuthState) => state.auth?.user?.locked;
