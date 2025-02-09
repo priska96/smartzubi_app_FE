@@ -17,11 +17,8 @@ import PaymentPage from '@/pages/payment/PaymentPage';
 import { SuccessDisplay } from '@/features/payment/SuccessDisplay';
 import { FreeMemberPage } from '@/pages/Forbidden/FreeMemberPage';
 import { LockedMemberPage } from '@/pages/Forbidden/LockedMemberPage';
-import { useAuthUser } from '@/features/authentication/hooks';
 
 function Routes() {
-    const user = useAuthUser();
-
     const routesForPublic = [
         {
             path: '/',
@@ -91,24 +88,22 @@ function Routes() {
         },
     ];
 
-    const routesForNotAuthenticatedOnly: RouteObject[] = !user
-        ? [
-              {
-                  path: '/',
-                  element: <AppLayout />,
-                  children: [
-                      {
-                          path: '/login',
-                          element: <Login />,
-                      },
-                      {
-                          path: '/register',
-                          element: <Register />,
-                      },
-                  ],
-              },
-          ]
-        : [];
+    const routesForNotAuthenticatedOnly: RouteObject[] = [
+        {
+            path: '/',
+            element: <AppLayout />,
+            children: [
+                {
+                    path: '/login',
+                    element: <Login />,
+                },
+                {
+                    path: '/register',
+                    element: <Register />,
+                },
+            ],
+        },
+    ];
 
     const router = createBrowserRouter([
         ...routesForPublic,

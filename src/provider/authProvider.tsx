@@ -43,6 +43,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         const initializeUser = async () => {
             applyToken(currAccessToken ?? '');
             if (currAccessToken) {
+                if (user) {
+                    setLoading(false);
+                    return;
+                }
                 try {
                     const userData = await getUser(currAccessToken);
                     setAuthUser(userData);
@@ -50,6 +54,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
                     console.log('Failed to get user');
                     await refreshTokens();
                 }
+            } else {
+                setAuth(undefined);
             }
             setLoading(false);
         };

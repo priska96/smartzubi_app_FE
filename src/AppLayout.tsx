@@ -3,12 +3,17 @@ import { Logo } from './components/Logo';
 import React from 'react';
 import { SwitchLanguageButton } from './components/SwitchLanguageButton';
 import { Container } from '@mui/material';
+import { useAuthStore } from './store';
 
 function AppLayout() {
     const navigate = useNavigate();
+    const { auth } = useAuthStore();
+
     React.useEffect(() => {
-        navigate('/login', { replace: true });
-    }, [navigate]);
+        if (auth?.user && auth?.access_token) {
+            navigate('/exams', { replace: true });
+        }
+    }, [navigate, auth]);
 
     return (
         <Container className="bg-zinc-50 pt-3 h-[100vh] !px-0">
