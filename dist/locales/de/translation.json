@@ -29,7 +29,13 @@
         "account_locked": "Account ist gesperrt. Bitte kontaktiere den Support.",
         "account_has_sessoin": "Bereits eingeloggt. Bei weiteren Versuchen wird dein Account gesperrt.",
         "account_too_many_attempts": "Account wurde gesperrt aufgrund von zu vielen weiteren Loginversuchen.",
-        "could_not_validate_credentials": "Konnte die Anmeldeinformationen nicht überprüfen."
+        "could_not_validate_credentials": "Konnte die Anmeldeinformationen nicht überprüfen.",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "forgot_password": "Passwort vergessen?",
+        "signIn": "Einloggen",
+        "no_account": "Kein Konto?",
+        "register_here": "Hier registrieren"
     },
     "forbidden": {
         "free-member": {
@@ -47,7 +53,6 @@
         "list_title": "IHK Prüfungen",
         "pdf_title": "IHK Prüfung PDF",
         "exam": {
-            "start_button": "Test starten",
             "score": "Testergebnis",
             "time_left": "Verbleibende Zeit",
             "back_button": "Zurück",

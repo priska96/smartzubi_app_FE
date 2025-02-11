@@ -29,7 +29,13 @@
         "account_locked": "Tài khoản bị khóa. Vui lòng liên hệ với bộ phận hỗ trợ.",
         "account_has_sessoin": "Đã đăng nhập. Nếu tiếp tục thử, tài khoản của bạn sẽ bị khóa.",
         "account_too_many_attempts": "Tài khoản đã bị khóa do quá nhiều lần đăng nhập sai.",
-        "could_not_validate_credentials": "Không thể xác minh thông tin đăng nhập."
+        "could_not_validate_credentials": "Không thể xác minh thông tin đăng nhập.",
+        "email": "Thư điện tử",
+        "password": "Mật khẩu",
+        "forgot_password": "Quên mật khẩu?",
+        "signIn": "Đăng nhập",
+        "no_account": "Chưa có tài khoản?",
+        "register_here": "Đăng ký tại đây"
     },
     "forbidden": {
         "free-member": {
@@ -47,7 +53,6 @@
         "list_title": "Danh sách kỳ thi IHK",
         "pdf_title": "PDF kỳ thi IHK",
         "exam": {
-            "start_button": "Bắt đầu kiểm tra",
             "score": "Điểm số",
             "time_left": "Thời gian còn lại",
             "back_button": "Quay lại",
