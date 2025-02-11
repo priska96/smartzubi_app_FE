@@ -15,7 +15,7 @@ function UserProfilePage() {
         <Container className="py-4">
             <Stack gap={1} my={2}>
                 <Typography textAlign="center" variant="subtitle1">
-                    {t('proile.title')}
+                    {t('profile.title')}
                 </Typography>
             </Stack>
             <UserProfile />

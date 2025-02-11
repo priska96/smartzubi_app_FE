@@ -6,3 +6,4 @@ export {
 } from './useAuth';
 export { useLogout } from './useLogout';
 export { useApplyToken } from './useApplyToken';
+export { useForgotPassword } from './useForgotPassword';

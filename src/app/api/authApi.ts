@@ -1,6 +1,7 @@
 import { api, apiAuth } from './axiosInstance';
 import { User } from './models';
 import {
+    ForgotPasswordReq,
     LoginReqData,
     LoginResData,
     RegisterReqData,
@@ -55,17 +56,17 @@ export const logout = async () => {
 };
 
 export const tokenRefresh = async ({
-    refreshToken,
-    accessToken,
+    refresh_token,
+    access_token,
     user_id,
 }: TokenRefreshReqData): Promise<TokenRefreshResData> => {
     try {
         const response = await api.post(
             '/api/refresh',
-            { refreshToken, user_id },
+            { refresh_token, user_id },
             {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${access_token}`,
                 },
             }
         );
@@ -81,6 +82,19 @@ export const getUser = async (accessToken: string): Promise<User> => {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
+        });
+        return response.data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const forgotPassword = async ({
+    email,
+}: ForgotPasswordReq): Promise<any> => {
+    try {
+        const response = await api.post('/api/forgot-password', {
+            email,
         });
         return response.data;
     } catch (e) {

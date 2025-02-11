@@ -14,7 +14,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthOutlet from './AuthOutlet';
@@ -22,6 +22,7 @@ import { loginSchema } from '@/app/api';
 import { LoginReqData } from '@/app/api/types';
 import { isAxiosError } from 'axios';
 import { useLogin } from '@/features/authentication/hooks';
+import ForgotPassword from '@/components/ForgotPassword';
 
 function Login() {
     const { t } = useTranslation();
@@ -39,7 +40,7 @@ function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
+    const [open, setOpen] = useState(false);
     const [error, setError] = React.useState('');
 
     const handleClose = (
@@ -90,6 +91,7 @@ function Login() {
                     {error}
                 </Alert>
             </Snackbar>
+            {/* <ForgotPassword open={open} setOpen={setOpen} /> */}
             <TextField
                 {...register('email')}
                 error={!!errors.email}
@@ -141,7 +143,7 @@ function Login() {
                 <Link
                     variant="body2"
                     textAlign="right"
-                    onClick={() => navigate('/forgot-password')}
+                    onClick={() => setOpen(true)}
                 >
                     {t('login.forgot_password')}
                 </Link>

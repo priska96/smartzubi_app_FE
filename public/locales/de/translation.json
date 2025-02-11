@@ -47,6 +47,7 @@
         "list_title": "IHK Prüfungen",
         "pdf_title": "IHK Prüfung PDF",
         "exam": {
+            "start_button": "Test starten",
             "score": "Testergebnis",
             "time_left": "Verbleibende Zeit",
             "back_button": "Zurück",

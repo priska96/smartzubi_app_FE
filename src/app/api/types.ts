@@ -18,13 +18,18 @@ export type LoginResData = {
     user?: User;
 };
 export type TokenRefreshReqData = {
-    refreshToken: string;
-    accessToken: string;
+    refresh_token: string;
+    access_token: string;
     user_id: number;
 };
 export type TokenRefreshResData = {
     access_token: string;
 };
+
+export type ForgotPasswordReq = {
+    email: string;
+};
+
 export type AnswerCollection = {
     [key: number]: number[] | OrderCalcAnswer;
 };

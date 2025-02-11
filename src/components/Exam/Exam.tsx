@@ -1,21 +1,18 @@
-import { Container, Stack, Button, Typography, Card } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Container, Button, Typography, Card } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { cn } from '@/themes/utils';
 import { Exam, Question, TypeEnum, User, UserExam } from '@/app/api/models';
 import AnswerContent from './Answer/AnswerContent';
 import useQuery from '@/hooks/useQuery';
 import QuestionContent from './QuestionContent';
 import { createUserExam, getExam, getUserExam } from '@/app/api';
-import {
-    AnswerCollection,
-    AnsweredQuestionIds,
-    OrderCalcAnswer,
-} from '@/app/api/types';
+import { AnswerCollection, AnsweredQuestionIds } from '@/app/api/types';
 import ChatBot from '../ChatBot/ChatBot';
 import { useAuthUser } from '@/features/authentication/hooks';
 import { useChatBotStore } from '@/store';
 import { useTranslation } from 'react-i18next';
+import { generateAnswerIds, setMCAnswers, setOrderCalcAnswers } from './utils';
+import { ExamBottomNavigator } from './ExamBottomNavigator';
+import { Timer } from './Timer';
 
 export function Quiz({ exam_id }: { exam_id?: string }) {
     const { t } = useTranslation();
@@ -28,8 +25,8 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
     const [answers, setAnswers] = useState<AnswerCollection>({});
     const [result, setResult] = useState<UserExam | null>(null);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(90 * 60); // 90min in sec
-    const [isRunning, setIsRunning] = useState(true); // Timer is running by default
+    const [timeLeft, setTimeLeft] = useState(20 * 60); // 20min in sec
+    const [isRunning, setIsRunning] = useState(false); // Timer is running by default
 
     useEffect(() => {
         if (!exam_id) return;
@@ -50,60 +47,32 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
         }
     }, [query, user]);
 
-    useEffect(() => {
-        if (isRunning && timeLeft > 0 && result === null) {
-            const timer = setInterval(() => {
-                setTimeLeft((prevTime) => prevTime - 1);
-            }, 1000);
-            return () => clearInterval(timer);
-        }
-    }, [isRunning, timeLeft, result]);
-
-    useEffect(() => {
-        if (timeLeft === 0) {
-            handleSubmit();
-        }
+    useEffect(
+        () => {
+            if (timeLeft === 0) {
+                const submitForm = async () => {
+                    try {
+                        await handleSubmit();
+                    } catch (error) {
+                        console.error('Error in handleSubmit:', error);
+                    }
+                };
+                submitForm();
+            }
+        },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [timeLeft]);
+        [timeLeft]
+    );
 
     if (exam === null) {
         return <>Loading...</>;
     }
-    const formatTime = (time: number) => {
-        const minutes = Math.floor(time / 60);
-        const seconds = time % 60;
-        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    };
 
     const handleSubmit = async () => {
         setIsRunning(false);
         let answered_questions_ids = [] as AnsweredQuestionIds[];
         if (Object.keys(answers).length > 0) {
-            answered_questions_ids = Object.keys(answers).map((qId) => {
-                const questionId = parseInt(qId);
-                if (!Array.isArray(answers[questionId])) {
-                    if (Object.keys(answers[questionId]).length === 1) {
-                        return {
-                            question_id: questionId,
-                            answer_pair: answers[questionId],
-                            answer_ids: null,
-                            type: TypeEnum.calculation,
-                        };
-                    }
-                    return {
-                        question_id: questionId,
-                        answer_pair: answers[questionId],
-                        answer_ids: null,
-                        type: TypeEnum.ordering,
-                    };
-                }
-                return {
-                    question_id: questionId,
-                    answer_ids: answers[questionId],
-                    answer_pair: null,
-                    type: TypeEnum.multiple_choice,
-                };
-            });
+            answered_questions_ids = generateAnswerIds(answers);
         }
         try {
             const res = await createUserExam({
@@ -125,41 +94,22 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
         answerText?: string
     ) => {
         if (question.type === TypeEnum.multiple_choice) {
-            setAnswers((prevAnswers) => {
-                const currentAnswers =
-                    (prevAnswers[question.id] as number[]) || [];
-                if (currentAnswers.includes(answerId)) {
-                    return {
-                        ...prevAnswers,
-                        [question.id]: currentAnswers.filter(
-                            (ans) => ans !== answerId
-                        ),
-                    };
-                }
-                return {
-                    ...prevAnswers,
-                    [question.id]: [...currentAnswers, answerId],
-                };
-            });
+            setAnswers((prevAnswers) =>
+                setMCAnswers(prevAnswers, question.id, answerId)
+            );
         }
         if (
             question.type === TypeEnum.ordering ||
             question.type === TypeEnum.calculation
         ) {
-            setAnswers((prevAnswers) => {
-                const currentAnswers =
-                    (prevAnswers[question.id] as OrderCalcAnswer) || {};
-                if (Object.keys(currentAnswers).includes(answerId.toString())) {
-                    return prevAnswers;
-                } else {
-                    const answerPair = {} as OrderCalcAnswer;
-                    answerPair[answerId] = answerText ?? '';
-                    return {
-                        ...prevAnswers,
-                        [question.id]: { ...currentAnswers, ...answerPair },
-                    };
-                }
-            });
+            setAnswers((prevAnswers) =>
+                setOrderCalcAnswers(
+                    prevAnswers,
+                    question.id,
+                    answerId,
+                    answerText
+                )
+            );
         }
     };
     const currentQuestion = exam?.questions[currentQuestionIndex];
@@ -185,14 +135,24 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             {t('exams.exam.score')}: {result.score}/{' '}
                             {result.score_total}
                         </Typography>
+                    ) : isRunning ? (
+                        <Timer
+                            timeLeft={timeLeft}
+                            isRunning={isRunning}
+                            hasResult={!!result}
+                            setTimeLeft={setTimeLeft}
+                        />
                     ) : (
-                        <Typography
-                            textAlign="center"
-                            className="!mb-4"
-                            variant="h3"
-                        >
-                            {t('exams.exam.time_left')}: {formatTime(timeLeft)}
-                        </Typography>
+                        <div className="flex justify-center w-full">
+                            <Button
+                                variant="contained"
+                                className="!text-white"
+                                disabled={isRunning}
+                                onClick={() => setIsRunning(true)}
+                            >
+                                {t('exams.exam.start_button')}
+                            </Button>
+                        </div>
                     )}
                     <Card
                         className="mb-4 shadow-md py-5 relative"
@@ -210,79 +170,14 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                         />
                         <ChatBot examId={parseInt(exam_id ?? '-1')} />
                     </Card>
-                    <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        className="py-3"
-                    >
-                        <Button
-                            variant="contained"
-                            className="!text-white"
-                            disabled={currentQuestionIndex === 0}
-                            onClick={() =>
-                                setCurrentQuestionIndex(
-                                    currentQuestionIndex - 1
-                                )
-                            }
-                        >
-                            {t('exams.exam.back_button')}
-                        </Button>
-                        {currentQuestionIndex === exam.questions.length - 1 ? (
-                            result ? (
-                                <Button
-                                    className="!text-white"
-                                    variant="contained"
-                                    disabled
-                                >
-                                    {t('exams.exam.next_button')}
-                                </Button>
-                            ) : (
-                                <Button
-                                    className="!text-white"
-                                    variant="contained"
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                >
-                                    {t('exams.exam.send_button')}
-                                </Button>
-                            )
-                        ) : (
-                            <Button
-                                variant="contained"
-                                className="!text-white"
-                                onClick={() =>
-                                    setCurrentQuestionIndex(
-                                        currentQuestionIndex + 1
-                                    )
-                                }
-                            >
-                                {t('exams.exam.next_button')}
-                            </Button>
-                        )}
-                    </Stack>
-                    <Stack direction="row" flexWrap="wrap" gap={1}>
-                        {exam?.questions.map((q, idx) => (
-                            <span
-                                key={idx}
-                                className={cn(
-                                    'relative px-2 rounded-md bg-sky-500 border border-sky-500 text-white font-bold',
-                                    idx === currentQuestionIndex
-                                        ? 'bg-white text-sky-500'
-                                        : ''
-                                )}
-                                onClick={() => {
-                                    setCurrentQuestionIndex(idx);
-                                }}
-                            >
-                                {Object.keys(answers).includes(
-                                    q.id.toString()
-                                ) && (
-                                    <CheckCircleIcon className="absolute right-[-10px] top-[-10px] text-zinc-400 !w-[18px]" />
-                                )}
-                                {idx + 1}
-                            </span>
-                        ))}
-                    </Stack>
+                    <ExamBottomNavigator
+                        exam={exam}
+                        hasResult={Boolean(result)}
+                        answers={answers}
+                        currentQuestionIndex={currentQuestionIndex}
+                        setCurrentQuestionIndex={setCurrentQuestionIndex}
+                        handleSubmit={handleSubmit}
+                    />
                 </Container>
             )}
         </>

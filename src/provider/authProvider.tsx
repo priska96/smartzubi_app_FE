@@ -10,7 +10,7 @@ import { useAuthStore } from '@/store';
 import { useApplyToken } from '@/features/authentication/hooks';
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
-    const { setAuth, setAuthUser } = useAuthStore();
+    const { setAuth, setAuthUser, setAuthToken } = useAuthStore();
     const user = useAuthUser();
     const currAccessToken = useAuthAccessToken();
     const refreshToken = useAuthRefreshToken();
@@ -22,11 +22,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
             if (refreshToken && currAccessToken && user) {
                 console.log('Refreshing tokens');
                 const { access_token: accessToken } = await tokenRefresh({
-                    refreshToken: refreshToken,
-                    accessToken: currAccessToken,
+                    refresh_token: refreshToken,
+                    access_token: currAccessToken,
                     user_id: user.id,
                 });
                 console.log('Refreshing tokens success');
+                setAuthToken(accessToken);
                 applyToken(accessToken);
                 const userData = await getUser(accessToken);
                 setAuthUser(userData);

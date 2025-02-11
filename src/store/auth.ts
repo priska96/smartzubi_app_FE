@@ -8,6 +8,7 @@ export type AuthState = {
     auth?: LoginResData;
     setAuth: (auth: LoginResData | undefined) => void;
     setAuthUser: (auth: User | undefined) => void;
+    setAuthToken: (accessToken: string | undefined) => void;
 };
 
 export const isPaying = (state: AuthState) => state.auth?.user?.is_paying;
@@ -39,7 +40,16 @@ export const useAuthStore = create<AuthState>()(
                 set((state) => ({
                     ...state,
                     auth: {
+                        ...state.auth,
                         user: authUser,
+                    },
+                })),
+            setAuthToken: (accessToken: string | undefined) =>
+                set((state) => ({
+                    ...state,
+                    auth: {
+                        ...state.auth,
+                        access_token: accessToken,
                     },
                 })),
         }),
