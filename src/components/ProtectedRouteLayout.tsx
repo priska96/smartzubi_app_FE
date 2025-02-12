@@ -5,8 +5,10 @@ import { Logo } from './Logo';
 import { useAuthUser } from '@/features/authentication/hooks';
 import { /*isPaying,*/ isLocked, useAuthStore } from '@/store';
 import { SwitchLanguageButton } from './SwitchLanguageButton';
+import { useKeyboardHeight } from '@/hooks/useKeyboardHeight';
 
 export function ProtectedRouteLayout() {
+    const keyboardHeight = useKeyboardHeight();
     const user = useAuthUser();
     // const isPayingUser = useAuthStore(isPaying);
     const isLockedUser = useAuthStore(isLocked);
@@ -27,7 +29,9 @@ export function ProtectedRouteLayout() {
     }
 
     return (
-        <Container className="bg-zinc-50 pt-3 h-[100vh] !px-0">
+        <Container
+            className={`bg-zinc-50 pt-3 h-[100vh] !px-0 pb-[${keyboardHeight}px]`}
+        >
             <Logo />
             {/* <Typography textAlign="center" variant="h2">
                 LOGO SmartZubi

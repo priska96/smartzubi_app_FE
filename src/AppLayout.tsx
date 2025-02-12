@@ -4,12 +4,14 @@ import React from 'react';
 import { SwitchLanguageButton } from './components/SwitchLanguageButton';
 import { Container } from '@mui/material';
 import { useAuthStore, isPaying, isLocked } from './store';
+import { useKeyboardHeight } from './hooks/useKeyboardHeight';
 
 function AppLayout() {
     const navigate = useNavigate();
     const { auth } = useAuthStore();
     const isPayingUser = useAuthStore(isPaying);
     const isLockedUser = useAuthStore(isLocked);
+    const keyboardHeight = useKeyboardHeight();
 
     React.useEffect(() => {
         if (auth?.user && auth?.access_token && isPayingUser && !isLockedUser) {
@@ -18,7 +20,9 @@ function AppLayout() {
     }, [navigate, auth, isPayingUser, isLockedUser]);
 
     return (
-        <Container className="bg-zinc-50 pt-3 h-[100vh] !px-0">
+        <Container
+            className={`bg-zinc-50 pt-3 h-[100vh] !px-0 pb-[${keyboardHeight}px]`}
+        >
             <Logo />
             <Container
                 sx={{
