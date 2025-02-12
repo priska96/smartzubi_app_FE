@@ -3,17 +3,19 @@ import { Logo } from './components/Logo';
 import React from 'react';
 import { SwitchLanguageButton } from './components/SwitchLanguageButton';
 import { Container } from '@mui/material';
-import { useAuthStore } from './store';
+import { useAuthStore, isPaying, isLocked } from './store';
 
 function AppLayout() {
     const navigate = useNavigate();
     const { auth } = useAuthStore();
+    const isPayingUser = useAuthStore(isPaying);
+    const isLockedUser = useAuthStore(isLocked);
 
     React.useEffect(() => {
-        if (auth?.user && auth?.access_token) {
+        if (auth?.user && auth?.access_token && isPayingUser && !isLockedUser) {
             navigate('/exams', { replace: true });
         }
-    }, [navigate, auth]);
+    }, [navigate, auth, isPayingUser, isLockedUser]);
 
     return (
         <Container className="bg-zinc-50 pt-3 h-[100vh] !px-0">

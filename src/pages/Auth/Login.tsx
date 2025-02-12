@@ -14,7 +14,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AuthOutlet from './AuthOutlet';
@@ -22,7 +22,7 @@ import { loginSchema } from '@/app/api';
 import { LoginReqData } from '@/app/api/types';
 import { isAxiosError } from 'axios';
 import { useLogin } from '@/features/authentication/hooks';
-import ForgotPassword from '@/components/ForgotPassword';
+// import ForgotPassword from '@/components/ForgotPassword';
 
 function Login() {
     const { t } = useTranslation();
@@ -40,7 +40,7 @@ function Login() {
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [error, setError] = React.useState('');
 
     const handleClose = (
@@ -122,7 +122,6 @@ function Login() {
                         },
                     }}
                     InputProps={{
-                        // <-- This is where the toggle button is added.
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
@@ -140,13 +139,13 @@ function Login() {
                         ),
                     }}
                 />
-                <Link
+                {/* <Link
                     variant="body2"
                     textAlign="right"
                     onClick={() => setOpen(true)}
                 >
                     {t('login.forgot_password')}
-                </Link>
+                </Link> */}
 
                 <Button variant="contained" type="submit">
                     {t('login.signIn')}

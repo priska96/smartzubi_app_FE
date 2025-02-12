@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import BottomBar from './ContentOutlet/BottomBar';
 import { Logo } from './Logo';
 import { useAuthUser } from '@/features/authentication/hooks';
@@ -11,14 +11,19 @@ export function ProtectedRouteLayout() {
     const isPayingUser = useAuthStore(isPaying);
     const isLockedUser = useAuthStore(isLocked);
 
+    const navigate = useNavigate();
+
     if (!user || Object.keys(user).length === 0) {
-        return <Navigate to="/login" />;
+        navigate('/login');
+        return;
     }
-    if (!isPayingUser) {
-        return <Navigate to="/forbidden-free-member" />;
-    }
+    // if (!isPayingUser) {
+    //     navigate('/forbidden-free-member');
+    //     return;
+    // }
     if (isLockedUser) {
-        return <Navigate to="/forbidden-locked-member" />;
+        navigate('/forbidden-locked-member');
+        return;
     }
 
     return (
