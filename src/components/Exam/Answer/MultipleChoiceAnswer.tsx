@@ -15,6 +15,7 @@ export function MultipleChoiceAnswer({
     answers,
     handleChange,
     result,
+    disabled,
 }: AnswerContentProps) {
     const defaultStyle =
         'w-full border border-zinc-400 bg-zinc-100 rounded-lg py-4 pl-2 pr-7 !m-0';
@@ -65,7 +66,7 @@ export function MultipleChoiceAnswer({
                                 )}
                                 control={
                                     <Checkbox
-                                        disabled={!!result || false}
+                                        disabled={disabled || !!result || false}
                                         name={`question-${currentQuestion.id}`}
                                         value={answer.id}
                                         checked={isChecked}

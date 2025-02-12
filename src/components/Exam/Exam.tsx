@@ -167,6 +167,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             answers={answers}
                             handleChange={handleChange}
                             result={result}
+                            disabled={!isRunning}
                         />
                         <ChatBot examId={parseInt(exam_id ?? '-1')} />
                     </Card>
@@ -177,6 +178,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                         currentQuestionIndex={currentQuestionIndex}
                         setCurrentQuestionIndex={setCurrentQuestionIndex}
                         handleSubmit={handleSubmit}
+                        disabled={!isRunning}
                     />
                 </Container>
             )}

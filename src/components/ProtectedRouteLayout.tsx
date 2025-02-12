@@ -3,12 +3,12 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import BottomBar from './ContentOutlet/BottomBar';
 import { Logo } from './Logo';
 import { useAuthUser } from '@/features/authentication/hooks';
-import { isPaying, isLocked, useAuthStore } from '@/store';
+import { /*isPaying,*/ isLocked, useAuthStore } from '@/store';
 import { SwitchLanguageButton } from './SwitchLanguageButton';
 
 export function ProtectedRouteLayout() {
     const user = useAuthUser();
-    const isPayingUser = useAuthStore(isPaying);
+    // const isPayingUser = useAuthStore(isPaying);
     const isLockedUser = useAuthStore(isLocked);
 
     const navigate = useNavigate();

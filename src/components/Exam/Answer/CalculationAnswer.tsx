@@ -9,6 +9,7 @@ export default function CalculationAnswer({
     answers,
     handleChange,
     result,
+    disabled,
 }: AnswerContentProps) {
     // console.log(answers);
     return (
@@ -50,7 +51,7 @@ export default function CalculationAnswer({
                                     }}
                                     className="min-w-[100px] w-[100px]"
                                     id="outlined-basic"
-                                    disabled={!!result || false}
+                                    disabled={disabled || !!result || false}
                                     label=""
                                     variant="outlined"
                                     value={val}

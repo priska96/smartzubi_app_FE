@@ -14,6 +14,7 @@ interface ExamBottomNavigatorProps {
     currentQuestionIndex: number;
     setCurrentQuestionIndex: Dispatch<SetStateAction<number>>;
     handleSubmit: () => Promise<void>;
+    disabled?: boolean;
 }
 export const ExamBottomNavigator = ({
     exam,
@@ -22,6 +23,7 @@ export const ExamBottomNavigator = ({
     currentQuestionIndex,
     setCurrentQuestionIndex,
     handleSubmit,
+    disabled,
 }: ExamBottomNavigatorProps) => {
     const { t } = useTranslation();
     const isLastQuestion = currentQuestionIndex === exam.questions.length - 1;
@@ -35,7 +37,7 @@ export const ExamBottomNavigator = ({
                 <Button
                     variant="contained"
                     className="!text-white"
-                    disabled={currentQuestionIndex === 0}
+                    disabled={disabled || currentQuestionIndex === 0}
                     onClick={() =>
                         setCurrentQuestionIndex(currentQuestionIndex - 1)
                     }
@@ -53,6 +55,7 @@ export const ExamBottomNavigator = ({
                         </Button>
                     ) : (
                         <Button
+                            disabled={disabled}
                             className="!text-white"
                             variant="contained"
                             type="submit"
@@ -63,6 +66,7 @@ export const ExamBottomNavigator = ({
                     )
                 ) : (
                     <Button
+                        disabled={disabled}
                         variant="contained"
                         className="!text-white"
                         onClick={() =>
@@ -81,9 +85,11 @@ export const ExamBottomNavigator = ({
                             'relative px-2 rounded-md bg-sky-500 border border-sky-500 text-white font-bold',
                             idx === currentQuestionIndex
                                 ? 'bg-white text-sky-500'
-                                : ''
+                                : '',
+                            disabled ? 'bg-gray-300' : ''
                         )}
                         onClick={() => {
+                            if (disabled) return;
                             setCurrentQuestionIndex(idx);
                         }}
                     >

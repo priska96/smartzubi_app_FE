@@ -10,6 +10,7 @@ export default function OrderingAnswer({
     answers,
     handleChange,
     result,
+    disabled,
 }: AnswerContentProps) {
     // console.log(answers);
     return (
@@ -51,7 +52,7 @@ export default function OrderingAnswer({
                                     }}
                                     className="min-w-[40px] w-[40px]"
                                     id="outlined-basic"
-                                    disabled={!!result || false}
+                                    disabled={disabled || !!result || false}
                                     label=""
                                     variant="outlined"
                                     value={val}

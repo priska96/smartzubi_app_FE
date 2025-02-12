@@ -10,4 +10,5 @@ export interface AnswerContentProps {
         answerText?: string
     ) => void;
     result: UserExam | null;
+    disabled?: boolean;
 }

@@ -10,6 +10,7 @@ export default function AnswerContent({
     answers,
     handleChange,
     result,
+    disabled,
 }: AnswerContentProps) {
     // console.log(answers);
     return (
@@ -20,6 +21,7 @@ export default function AnswerContent({
                     answers={answers}
                     handleChange={handleChange}
                     result={result}
+                    disabled={disabled}
                 />
             )}
             {currentQuestion.type === TypeEnum.ordering && (
@@ -28,6 +30,7 @@ export default function AnswerContent({
                     answers={answers}
                     handleChange={handleChange}
                     result={result}
+                    disabled={disabled}
                 />
             )}
             {currentQuestion.type === TypeEnum.calculation && (
@@ -36,6 +39,7 @@ export default function AnswerContent({
                     answers={answers}
                     handleChange={handleChange}
                     result={result}
+                    disabled={disabled}
                 />
             )}
         </Container>

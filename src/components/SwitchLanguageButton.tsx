@@ -15,10 +15,15 @@ export const SwitchLanguageButton = () => {
             className="font-bold"
             type="submit"
             onClick={() => {
-                i18n.changeLanguage(i18n.language === 'de' ? 'vi' : 'de');
+                i18n.changeLanguage(
+                    i18n.language.toLowerCase().includes('de') ? 'vi' : 'de'
+                );
             }}
         >
-            {lngs[i18n.language === 'de' ? 'vi' : 'de'].nativeName}
+            {
+                lngs[i18n.language.toLowerCase().includes('de') ? 'vi' : 'de']
+                    .nativeName
+            }
         </Button>
     );
 };
