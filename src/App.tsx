@@ -5,7 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Routes from './routes';
 import AuthProvider from './provider/authProvider';
-// import { initSentry } from './config/sentry';
+import { initSentry } from './config/sentry';
 import { useApplyToken } from './features/authentication/hooks';
 import { useAuthStore } from './store';
 import { STRIPE_API_KEY } from './constants';
@@ -33,9 +33,9 @@ function App() {
         // clientSecret: CLIENT_SECRET,
     };
 
-    // React.useEffect(() => {
-    //     initSentry();
-    // }, []);
+    React.useEffect(() => {
+        initSentry();
+    }, []);
 
     useEffect(() => {
         applyToken(auth?.access_token || '');
