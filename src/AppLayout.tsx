@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from './components/Logo';
 import React from 'react';
 import { SwitchLanguageButton } from './components/SwitchLanguageButton';
@@ -7,11 +7,18 @@ import { useAuthStore, isPaying, isLocked } from './store';
 import { useKeyboardHeight } from './hooks/useKeyboardHeight';
 
 function AppLayout() {
+    const location = useLocation();
     const navigate = useNavigate();
     const { auth } = useAuthStore();
     const isPayingUser = useAuthStore(isPaying);
     const isLockedUser = useAuthStore(isLocked);
     const keyboardHeight = useKeyboardHeight();
+
+    React.useEffect(() => {
+        if (!auth?.user && !auth?.access_token && location.pathname === '/') {
+            navigate('/login');
+        }
+    }, [navigate, auth, location]);
 
     React.useEffect(() => {
         if (auth?.user && auth?.access_token && isPayingUser && !isLockedUser) {
