@@ -169,7 +169,7 @@ export function Quiz({ exam_id }: { exam_id?: string }) {
                             result={result}
                             disabled={!isRunning}
                         />
-                        <ChatBot examId={parseInt(exam_id ?? '-1')} />
+                        <ChatBot exam={exam} />
                     </Card>
                     <ExamBottomNavigator
                         exam={exam}

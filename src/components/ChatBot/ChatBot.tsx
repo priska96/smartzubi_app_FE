@@ -10,22 +10,22 @@ import {
 } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
-import { Message, sendMessage } from '@/app/api/chatBotApi';
+import { sendMessage } from '@/app/api/chatBotApi';
 import { useChatBotStore } from '@/store';
 import { useTranslation } from 'react-i18next';
 import { TypingIndicator } from '../TypingIndicator';
 import { countTokensInMessages } from './utils';
 import { TOKEN_LIMIT } from '@/constants';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { Exam } from '@/app/api/models';
 
-interface ChatBorProps {
-    examId: number;
+interface ChatBotProps {
+    exam: Exam;
 }
-const ChatBot = ({ examId }: ChatBorProps) => {
+const ChatBot = ({ exam }: ChatBotProps) => {
     const { t } = useTranslation();
     const chatWindowRef = useRef<HTMLDivElement>(null);
     const { chatBot, addMessages } = useChatBotStore();
-    const currentMessages = chatBot?.[examId].messageList ?? [];
+    const currentMessages = chatBot?.[exam.id].messageList ?? [];
     const [isOpen, setIsOpen] = useState(false);
     const [isNewMessageLoading, setIsNewMessageLoading] = useState(false);
 
@@ -73,8 +73,14 @@ const ChatBot = ({ examId }: ChatBorProps) => {
             setIsNewMessageLoading(true);
 
             let prevMsgToSend = currentMessages;
+            prevMsgToSend[0].content =
+                prevMsgToSend[0].content +
+                'Du findest in dieser JSON alle Fragen und richitgen Antworten zu dem aktuellen Test. Hilf dem Nutzer die Fragen zu beantworten. Hier die JSON: ' +
+                JSON.stringify(exam);
+
+            console.log('prevMsgToSend:', prevMsgToSend);
             const totalTokens = await countTokensInMessages([
-                ...(chatBot?.[examId].messageList ?? []),
+                ...(chatBot?.[exam.id].messageList ?? []),
                 { role: 'user', content: message },
             ]);
             console.log('Total tokens:', totalTokens);
@@ -89,7 +95,7 @@ const ChatBot = ({ examId }: ChatBorProps) => {
                 setIsNewMessageLoading(false);
                 return;
             }
-            addMessages(examId, [
+            addMessages(exam.id, [
                 { role: 'user', content: message },
                 {
                     role: 'assistant',
