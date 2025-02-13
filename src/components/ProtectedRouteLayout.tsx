@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import BottomBar from './ContentOutlet/BottomBar';
 import { Logo } from './Logo';
 import { useAuthUser } from '@/features/authentication/hooks';
-import { /*isPaying,*/ isLocked, useAuthStore } from '@/store';
+// import { isPaying,isLocked,useAuthStore } from '@/store';
 import { SwitchLanguageButton } from './SwitchLanguageButton';
 import { useKeyboardHeight } from '@/hooks/useKeyboardHeight';
 
@@ -11,7 +11,7 @@ export function ProtectedRouteLayout() {
     const keyboardHeight = useKeyboardHeight();
     const user = useAuthUser();
     // const isPayingUser = useAuthStore(isPaying);
-    const isLockedUser = useAuthStore(isLocked);
+    // const isLockedUser = useAuthStore(isLocked);
 
     const navigate = useNavigate();
 
@@ -23,10 +23,10 @@ export function ProtectedRouteLayout() {
     //     navigate('/forbidden-free-member');
     //     return;
     // }
-    if (isLockedUser) {
-        navigate('/forbidden-locked-member');
-        return;
-    }
+    // if (isLockedUser) {
+    //     navigate('/forbidden-locked-member');
+    //     return;
+    // }
 
     return (
         <Container

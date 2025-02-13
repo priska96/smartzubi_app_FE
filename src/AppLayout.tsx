@@ -3,15 +3,15 @@ import { Logo } from './components/Logo';
 import React from 'react';
 import { SwitchLanguageButton } from './components/SwitchLanguageButton';
 import { Container } from '@mui/material';
-import { useAuthStore, isPaying, isLocked } from './store';
+import { useAuthStore /*, isPaying, isLocked */ } from './store';
 import { useKeyboardHeight } from './hooks/useKeyboardHeight';
 
 function AppLayout() {
     const location = useLocation();
     const navigate = useNavigate();
     const { auth } = useAuthStore();
-    const isPayingUser = useAuthStore(isPaying);
-    const isLockedUser = useAuthStore(isLocked);
+    // const isPayingUser = useAuthStore(isPaying);
+    // const isLockedUser = useAuthStore(isLocked);
     const keyboardHeight = useKeyboardHeight();
 
     React.useEffect(() => {
@@ -21,10 +21,13 @@ function AppLayout() {
     }, [navigate, auth, location]);
 
     React.useEffect(() => {
-        if (auth?.user && auth?.access_token && isPayingUser && !isLockedUser) {
+        if (
+            auth?.user &&
+            auth?.access_token /* && isPayingUser && !isLockedUser*/
+        ) {
             navigate('/exams', { replace: true });
         }
-    }, [navigate, auth, isPayingUser, isLockedUser]);
+    }, [navigate, auth /*, isPayingUser, isLockedUser*/]);
 
     return (
         <Container
