@@ -135,4 +135,5 @@ out
 .vscode/
 .DS_Store
 
-dist
+dist.DS_Store
+./src/assets/.DS_Store
