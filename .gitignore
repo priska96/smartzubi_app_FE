@@ -134,6 +134,6 @@ out
 # VSC
 .vscode/
 .DS_Store
-
-dist.DS_Store
 ./src/assets/.DS_Store
+
+dist
