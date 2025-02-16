@@ -1,3 +1,4 @@
+import { UserExam } from '@/app/api/models';
 import {
     Table,
     TableBody,
@@ -9,7 +10,10 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function UserExamTable({ exams }) {
+interface UserExamTableProps {
+    exams: UserExam[];
+}
+function UserExamTable({ exams }: UserExamTableProps) {
     const navigate = useNavigate();
 
     return (

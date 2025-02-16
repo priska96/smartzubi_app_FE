@@ -16,7 +16,7 @@ export const initSentry = async () => {
             Sentry.replayIntegration({
                 networkDetailAllowUrls: [
                     window.location.origin,
-                    'localhost',
+                    // 'localhost',
                     'https://smartzubi-frontend-f46741e7a210.herokuapp.com/',
                     'https://smartzubi-backend-9a9dc1a5e4a6.herokuapp.com/',
                 ],
@@ -26,10 +26,10 @@ export const initSentry = async () => {
             }),
         ],
         // Tracing
-        tracesSampleRate: 1.0, //  Capture 100% of the transactions
+        tracesSampleRate: 0.1, //  Capture 10% of the transactions
         // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
         tracePropagationTargets: [
-            'localhost',
+            // 'localhost',
             'https://smartzubi-frontend-f46741e7a210.herokuapp.com/',
             'https://smartzubi-backend-9a9dc1a5e4a6.herokuapp.com/',
         ],

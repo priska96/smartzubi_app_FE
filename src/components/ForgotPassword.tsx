@@ -41,7 +41,7 @@ const ForgotPassword = ({ open, setOpen }: ForgotPasswordProps) => {
             const response = forgotPassword({
                 email: email,
             });
-            setMessage(response.data.message);
+            //setMessage(response.data.message);
         } catch (err: any) {
             if (err.response) {
                 setError(err.response.data.detail);

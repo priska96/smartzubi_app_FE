@@ -53,6 +53,7 @@ export interface User {
 
 export interface UserExam {
     id: number;
+    exam_id: number;
     created_at: Date;
     title: string;
     score: number;

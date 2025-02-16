@@ -3,7 +3,7 @@
     "version": "1.1.0",
     "engines": {
         "node": "23.7.0",
-        "npm": "10.9.2"
+        "npm": "11.1.0"
     },
     "type": "module",
     "description": "App for Azubis",
@@ -30,7 +30,7 @@
         "lint": "eslint src",
         "lint:fix": "eslint src --fix",
         "format": "prettier \"src/**/*.{js,jsx,ts,tsx,css,scss}\" --write",
-        "format+lint": "prettier \"src/**/*.{js,jsx,ts,tsx,css,scss}\" --write && eslint src --ext .js,.jsx,.ts,.tsx --fix",
+        "precommit": "npm run format && tsc && npm run lint",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:cover": "vitest run --coverage"
@@ -82,9 +82,11 @@
         "eslint-plugin-n": "^16.6.2",
         "eslint-plugin-prettier": "^5.2.1",
         "eslint-plugin-promise": "^6.6.0",
-        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-react": "^7.37.4",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.16",
+        "eslint-plugin-tailwindcss": "^3.18.0",
+        "jsdom": "^26.0.0",
         "postcss": "^8.4.39",
         "prettier": "3.4.2",
         "prettier-plugin-tailwindcss": "0.4.1",
